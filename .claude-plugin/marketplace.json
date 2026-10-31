@@ -1,0 +1,306 @@
+{
+  "name": "claude-blue-marketplace",
+  "owner": {
+    "name": "Claude-Blue maintainers"
+  },
+  "metadata": {
+    "description": "Defensive cybersecurity skills for Claude Code",
+    "version": "2.0.0"
+  },
+  "plugins": [
+    {
+      "name": "blue-team-ai",
+      "source": "./",
+      "description": "Claude-Blue ai profile: 23 defensive security skills (ai-security, appsec, data-security, privacy-engineering).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "ai"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/ai-security",
+        "./skills/appsec",
+        "./skills/data-security",
+        "./skills/privacy-engineering"
+      ]
+    },
+    {
+      "name": "blue-team-appsec",
+      "source": "./",
+      "description": "Claude-Blue appsec profile: 31 defensive security skills (appsec, api-security, devsecops, supply-chain-security, secrets-management, web-application-defense).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "appsec"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/appsec",
+        "./skills/api-security",
+        "./skills/devsecops",
+        "./skills/supply-chain-security",
+        "./skills/secrets-management",
+        "./skills/web-application-defense"
+      ]
+    },
+    {
+      "name": "blue-team-cloud",
+      "source": "./",
+      "description": "Claude-Blue cloud profile: 35 defensive security skills (cloud-security, aws-security, azure-security, gcp-security, saas-security, kubernetes-security, container-security).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "cloud"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/cloud-security",
+        "./skills/aws-security",
+        "./skills/azure-security",
+        "./skills/gcp-security",
+        "./skills/saas-security",
+        "./skills/kubernetes-security",
+        "./skills/container-security"
+      ]
+    },
+    {
+      "name": "blue-team-detection",
+      "source": "./",
+      "description": "Claude-Blue detection profile: 36 defensive security skills (detection-engineering, siem-engineering, threat-hunting, windows-security, active-directory-security, deception).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "detection"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/detection-engineering",
+        "./skills/siem-engineering",
+        "./skills/threat-hunting",
+        "./skills/windows-security",
+        "./skills/active-directory-security",
+        "./skills/deception"
+      ]
+    },
+    {
+      "name": "blue-team-dfir",
+      "source": "./",
+      "description": "Claude-Blue dfir profile: 47 defensive security skills (dfir, incident-response, windows-security, linux-security, endpoint-security, malware-analysis, network-security).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "dfir"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/dfir",
+        "./skills/incident-response",
+        "./skills/windows-security",
+        "./skills/linux-security",
+        "./skills/endpoint-security",
+        "./skills/malware-analysis",
+        "./skills/network-security"
+      ]
+    },
+    {
+      "name": "blue-team-grc",
+      "source": "./",
+      "description": "Claude-Blue grc profile: 29 defensive security skills (security-governance, compliance-audit, third-party-risk, security-metrics, privacy-engineering, business-continuity, security-architecture).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "grc"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/security-governance",
+        "./skills/compliance-audit",
+        "./skills/third-party-risk",
+        "./skills/security-metrics",
+        "./skills/privacy-engineering",
+        "./skills/business-continuity",
+        "./skills/security-architecture"
+      ]
+    },
+    {
+      "name": "blue-team-hunting",
+      "source": "./",
+      "description": "Claude-Blue hunting profile: 37 defensive security skills (threat-hunting, network-security, windows-security, linux-security, active-directory-security, threat-intelligence).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "hunting"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/threat-hunting",
+        "./skills/network-security",
+        "./skills/windows-security",
+        "./skills/linux-security",
+        "./skills/active-directory-security",
+        "./skills/threat-intelligence"
+      ]
+    },
+    {
+      "name": "blue-team-identity",
+      "source": "./",
+      "description": "Claude-Blue identity profile: 28 defensive security skills (identity-security, identity-governance, active-directory-security, azure-security, saas-security).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "identity"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/identity-security",
+        "./skills/identity-governance",
+        "./skills/active-directory-security",
+        "./skills/azure-security",
+        "./skills/saas-security"
+      ]
+    },
+    {
+      "name": "blue-team-ot",
+      "source": "./",
+      "description": "Claude-Blue ot profile: 25 defensive security skills (ot-ics-security, network-security, incident-response, business-continuity).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "ot"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/ot-ics-security",
+        "./skills/network-security",
+        "./skills/incident-response",
+        "./skills/business-continuity"
+      ]
+    },
+    {
+      "name": "blue-team-platform",
+      "source": "./",
+      "description": "Claude-Blue platform profile: 30 defensive security skills (vulnerability-management, asset-attack-surface, endpoint-security, linux-security, database-security, secrets-management).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "platform"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/vulnerability-management",
+        "./skills/asset-attack-surface",
+        "./skills/endpoint-security",
+        "./skills/linux-security",
+        "./skills/database-security",
+        "./skills/secrets-management"
+      ]
+    },
+    {
+      "name": "blue-team-soc",
+      "source": "./",
+      "description": "Claude-Blue soc profile: 49 defensive security skills (soc-operations, incident-response, edr-operations, email-security, identity-security, siem-engineering, threat-intelligence, insider-risk).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "soc"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/soc-operations",
+        "./skills/incident-response",
+        "./skills/edr-operations",
+        "./skills/email-security",
+        "./skills/identity-security",
+        "./skills/siem-engineering",
+        "./skills/threat-intelligence",
+        "./skills/insider-risk"
+      ]
+    },
+    {
+      "name": "blue-team-all",
+      "source": "./",
+      "description": "All 253 Claude-Blue skills in 49 categories. Large: may exceed the skill listing budget; prefer a profile plugin.",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/active-directory-security",
+        "./skills/ai-security",
+        "./skills/api-security",
+        "./skills/appsec",
+        "./skills/asset-attack-surface",
+        "./skills/aws-security",
+        "./skills/azure-security",
+        "./skills/business-continuity",
+        "./skills/cloud-security",
+        "./skills/compliance-audit",
+        "./skills/container-security",
+        "./skills/data-security",
+        "./skills/database-security",
+        "./skills/deception",
+        "./skills/detection-engineering",
+        "./skills/devsecops",
+        "./skills/dfir",
+        "./skills/edr-operations",
+        "./skills/email-security",
+        "./skills/endpoint-security",
+        "./skills/gcp-security",
+        "./skills/identity-governance",
+        "./skills/identity-security",
+        "./skills/incident-response",
+        "./skills/insider-risk",
+        "./skills/kubernetes-security",
+        "./skills/linux-security",
+        "./skills/malware-analysis",
+        "./skills/mobile-security",
+        "./skills/network-security",
+        "./skills/ot-ics-security",
+        "./skills/privacy-engineering",
+        "./skills/saas-security",
+        "./skills/secrets-management",
+        "./skills/security-architecture",
+        "./skills/security-awareness",
+        "./skills/security-governance",
+        "./skills/security-metrics",
+        "./skills/security-research",
+        "./skills/siem-engineering",
+        "./skills/soc-operations",
+        "./skills/supply-chain-security",
+        "./skills/third-party-risk",
+        "./skills/threat-hunting",
+        "./skills/threat-intelligence",
+        "./skills/vulnerability-management",
+        "./skills/web-application-defense",
+        "./skills/windows-security",
+        "./skills/wireless-security"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+Return-Path: <bounce@mailer-example.test>
+Received: from mx.corp.example (mx.corp.example [10.1.1.1]) by mbx.corp.example with ESMTP; Sat, 01 Mar 2025 10:00:05 +0000
+Received: from sender.mailer-example.test (sender.mailer-example.test [198.51.100.25]) by mx.corp.example with ESMTPS; Sat, 01 Mar 2025 10:00:01 +0000
+Authentication-Results: mx.corp.example; spf=pass smtp.mailfrom=mailer-example.test; dkim=none; dmarc=fail header.from=corp-payroll.example
+From: "Payroll" <payroll@corp-payroll.example>
+Reply-To: <payroll.desk@freemail.example>
+To: alice@corp.example
+Subject: Action required: update your bank details
+Date: Sat, 01 Mar 2025 10:00:00 +0000
+Message-ID: <abc123@mailer-example.test>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="b1"
+
+--b1
+Content-Type: text/plain; charset=utf-8
+
+Please confirm at https://login.corp-payroll.example/verify?u=alice today.
+--b1
+Content-Type: application/octet-stream
+Content-Disposition: attachment; filename="invoice.html"
+Content-Transfer-Encoding: base64
+
+PGh0bWw+PC9odG1sPg==
+--b1--
