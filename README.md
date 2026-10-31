@@ -23,7 +23,8 @@
   <a href="#usage">Usage</a> ·
   <a href="#verification">Verification</a> ·
   <a href="#development">Development</a> ·
-  <a href="#project-layout">Layout</a>
+  <a href="#project-layout">Layout</a> ·
+  <a href="#acknowledgements">Acknowledgements</a>
 </p>
 
 ---
@@ -195,6 +196,10 @@ tests/                                 unit tests and fixtures
 ```
 
 More detail: [ARCHITECTURE.md](ARCHITECTURE.md) · [CHANGELOG.md](CHANGELOG.md) · [ROADMAP.md](ROADMAP.md)
+
+## Acknowledgements
+
+Claude-Blue is inspired by **[Claude-Red](https://github.com/SnailSploit/Claude-Red)** by SnailSploit, a curated library of offensive security skills for Claude. Claude-Blue is its defensive counterpart: the same idea of structured, expert-level `SKILL.md` playbooks, applied to the blue team. No content was copied; every skill here was written independently for defensive use.
 
 ## License
 
