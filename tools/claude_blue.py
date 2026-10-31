@@ -347,11 +347,11 @@ def render_marketplace(skills) -> str:
     })
     data = {
         "name": "claude-blue-marketplace",
-        "owner": {"name": "Claude-Blue maintainers"},
+        "owner": {"name": "Kaan DOĞAN", "url": "https://github.com/kaandgnsh"},
         "metadata": {"description": "Defensive cybersecurity skills for Claude Code", "version": VERSION},
         "plugins": plugins,
     }
-    return json.dumps(data, indent=2) + "\n"
+    return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
 
 def sha256(path: Path) -> str:
