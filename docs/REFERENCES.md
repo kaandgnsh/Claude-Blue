@@ -2,7 +2,7 @@
 
 Each skill lists its own sources. These are the cross-cutting frameworks the catalog is aligned with:
 
-- Claude-Red (inspiration; offensive counterpart, no content copied): https://github.com/SnailSploit/Claude-Red
+- Claude-Red (source of the idea only; a separate red-team project, no shared code or content): https://github.com/SnailSploit/Claude-Red
 - Agent Skills specification: https://agentskills.io/specification and Claude Code skills docs: https://code.claude.com/docs/en/skills
 - Claude Code plugin reference: https://code.claude.com/docs/en/plugins-reference
 - NIST SP 800-61r3 Incident Response (2025): https://csrc.nist.gov/pubs/sp/800/61/r3/final

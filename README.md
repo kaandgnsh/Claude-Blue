@@ -199,7 +199,7 @@ More detail: [ARCHITECTURE.md](ARCHITECTURE.md) · [CHANGELOG.md](CHANGELOG.md) 
 
 ## Acknowledgements
 
-Claude-Blue is inspired by **[Claude-Red](https://github.com/SnailSploit/Claude-Red)** by SnailSploit, a curated library of offensive security skills for Claude. Claude-Blue is its defensive counterpart: the same idea of structured, expert-level `SKILL.md` playbooks, applied to the blue team. No content was copied; every skill here was written independently for defensive use.
+The idea for Claude-Blue came from **[Claude-Red](https://github.com/SnailSploit/Claude-Red)** by SnailSploit, a skill library for **red team** (offensive) work. Claude-Blue is a separate, independent project built for the **blue team**. It is not a fork or extension of Claude-Red, and it shares no code or content with it.
 
 ## License
 
