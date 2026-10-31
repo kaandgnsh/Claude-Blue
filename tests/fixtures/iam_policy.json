@@ -1,0 +1,7 @@
+{"Version": "2012-10-17", "Statement": [
+ {"Sid": "Admin", "Effect": "Allow", "Action": "*", "Resource": "*"},
+ {"Sid": "PassAny", "Effect": "Allow", "Action": ["iam:PassRole", "ec2:RunInstances"], "Resource": "*"},
+ {"Sid": "S3All", "Effect": "Allow", "Action": "s3:*", "Resource": "arn:aws:s3:::logs-bucket/*"},
+ {"Sid": "ReadOnly", "Effect": "Allow", "Action": ["s3:GetObject"], "Resource": "arn:aws:s3:::public-site/*"},
+ {"Sid": "DenyStuff", "Effect": "Deny", "Action": "*", "Resource": "*"}
+]}

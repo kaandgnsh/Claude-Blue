@@ -1,0 +1,91 @@
+{
+  "_comment": "Install profiles group categories so a user installs a role-sized subset. Claude Code keeps every skill name in context but drops descriptions once the skill listing exceeds its budget (about 1% of the context window), so installing all skills at user level can stop them from triggering.",
+  "soc": [
+    "soc-operations",
+    "incident-response",
+    "edr-operations",
+    "email-security",
+    "identity-security",
+    "siem-engineering",
+    "threat-intelligence",
+    "insider-risk"
+  ],
+  "dfir": [
+    "dfir",
+    "incident-response",
+    "windows-security",
+    "linux-security",
+    "endpoint-security",
+    "malware-analysis",
+    "network-security"
+  ],
+  "detection": [
+    "detection-engineering",
+    "siem-engineering",
+    "threat-hunting",
+    "windows-security",
+    "active-directory-security",
+    "deception"
+  ],
+  "hunting": [
+    "threat-hunting",
+    "network-security",
+    "windows-security",
+    "linux-security",
+    "active-directory-security",
+    "threat-intelligence"
+  ],
+  "cloud": [
+    "cloud-security",
+    "aws-security",
+    "azure-security",
+    "gcp-security",
+    "saas-security",
+    "kubernetes-security",
+    "container-security"
+  ],
+  "identity": [
+    "identity-security",
+    "identity-governance",
+    "active-directory-security",
+    "azure-security",
+    "saas-security"
+  ],
+  "appsec": [
+    "appsec",
+    "api-security",
+    "devsecops",
+    "supply-chain-security",
+    "secrets-management",
+    "web-application-defense"
+  ],
+  "grc": [
+    "security-governance",
+    "compliance-audit",
+    "third-party-risk",
+    "security-metrics",
+    "privacy-engineering",
+    "business-continuity",
+    "security-architecture"
+  ],
+  "ot": [
+    "ot-ics-security",
+    "network-security",
+    "incident-response",
+    "business-continuity"
+  ],
+  "ai": [
+    "ai-security",
+    "appsec",
+    "data-security",
+    "privacy-engineering"
+  ],
+  "platform": [
+    "vulnerability-management",
+    "asset-attack-surface",
+    "endpoint-security",
+    "linux-security",
+    "database-security",
+    "secrets-management"
+  ]
+}
