@@ -47,7 +47,7 @@ Test SSH changes with a second open session before restarting `sshd` to avoid lo
 
 ## Related skills
 
-`auditd-rules`, `endpoint-hardening`, `vuln-prioritization`, `security-exception-management`
+`auditd-rules`, `endpoint-hardening`, `vuln-prioritization`, `security-exception-management`, `ssh-hardening-build`
 
 ## References
 

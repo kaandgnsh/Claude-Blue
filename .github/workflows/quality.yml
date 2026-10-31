@@ -12,10 +12,13 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: "3.12"
-      - name: Optional test dependencies (YARA, Sigma, tshark)
+      - name: Optional test dependencies (YARA, Sigma, tshark, nftables, OpenSSH)
         run: |
-          sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y tshark
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y tshark nftables openssh-server iproute2 util-linux
           python -m pip install yara-python sigma-cli pysigma-backend-splunk
+      - name: Allow unprivileged user namespaces (firewall tests run in isolated netns)
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
       - run: python tools/claude_blue.py validate
       - run: python -m compileall -q tools tests skills
       - run: python -m unittest discover -s tests -v

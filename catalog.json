@@ -1,9 +1,9 @@
 {
   "project": "Claude-Blue",
   "version": "2.0.0",
-  "skill_count": 253,
-  "category_count": 49,
-  "tested_skill_count": 13,
+  "skill_count": 262,
+  "category_count": 50,
+  "tested_skill_count": 16,
   "categories": [
     {
       "id": "active-directory-security",
@@ -1686,6 +1686,83 @@
           "verification": "documented",
           "version": "2.0.0",
           "path": "skills/security-awareness/security-awareness-program"
+        }
+      ]
+    },
+    {
+      "id": "security-engineering",
+      "skills": [
+        {
+          "name": "cloud-firewall-build",
+          "title": "Cloud Firewall Build (Terraform)",
+          "description": "Build cloud network access controls as code \u2014 AWS security groups and NACLs, Azure NSGs, GCP VPC firewall rules \u2014 with Terraform using least-privilege ingress/egress, references instead of CIDRs where possible, tags/ownership, plus automated policy checks (terraform validate, Checkov/Trivy, OPA conftest) that block internet-exposed admin ports before apply. Use when creating or refactoring cloud firewall rules, landing-zone network baselines, or replacing click-ops security groups.",
+          "verification": "documented",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/cloud-firewall-build"
+        },
+        {
+          "name": "hardening-automation-build",
+          "title": "Hardening Automation Build (Ansible)",
+          "description": "Automate server hardening as code with Ansible (or equivalent) \u2014 idempotent roles for SSH, firewall, sysctl, auditd, packages and services that validate configs before replacing them, run safely with --check/--diff and canary batches, are tested with Molecule, and report drift. Use when rolling hardening (CIS-style baselines, the ssh/firewall builds from this category) out to many hosts, or converting manual hardening steps into repeatable automation.",
+          "verification": "documented",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/hardening-automation-build"
+        },
+        {
+          "name": "host-firewall-build",
+          "title": "Host Firewall Build (nftables)",
+          "description": "Design, generate, test and safely deploy a Linux host firewall with nftables \u2014 default-deny inbound, source allowlists, per-source SSH rate limiting, required ICMP/ICMPv6, optional egress control and logging \u2014 from a validated JSON policy, with real-traffic tests in isolated network namespaces and an auto-rollback apply script that prevents lockout. Use when building or replacing a server firewall, converting iptables/ufw rules to nftables, or locking down a host's exposed services.",
+          "verification": "tested",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/host-firewall-build"
+        },
+        {
+          "name": "ids-deployment-build",
+          "title": "IDS Deployment Build (Suricata)",
+          "description": "Deploy and operate a network IDS sensor with Suricata (optionally alongside Zeek) \u2014 capture design (SPAN/TAP, af-packet), HOME_NET and variables, rule sources with suricata-update, custom local rules, EVE JSON output to the SIEM, performance tuning, health monitoring \u2014 verified with suricata -T and PCAP replays. Use when building network detection for a segment or cloud VPC, standing up Security Onion-style sensors, or validating a Suricata configuration.",
+          "verification": "documented",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/ids-deployment-build"
+        },
+        {
+          "name": "log-shipping-build",
+          "title": "Log Shipping Build (Vector / Fluent Bit)",
+          "description": "Build a reliable, secure log shipping pipeline from hosts and services to a SIEM with Vector or Fluent Bit \u2014 source selection (journald, files, syslog, Windows events via agent), parsing, secret/PII redaction, TLS with certificate verification, disk buffering and backpressure, health metrics \u2014 verified with config validation and test events. Use when onboarding hosts to a SIEM, replacing unmaintained forwarders, or fixing lost or unparsed security logs.",
+          "verification": "documented",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/log-shipping-build"
+        },
+        {
+          "name": "secure-build-workflow",
+          "title": "Secure Build Workflow",
+          "description": "Engineering standard for building defensive security artifacts \u2014 firewalls, hardening configs, detection pipelines, IDS/log shipping deployments, security tools and IaC \u2014 from requirements and threat model through generation, automated validation, isolated testing, staged rollout with rollback, monitoring and documentation. Use whenever you are asked to write, configure, deploy or automate a blue-team control rather than just review one; every other security-engineering skill follows it.",
+          "verification": "documented",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/secure-build-workflow"
+        },
+        {
+          "name": "security-tool-development",
+          "title": "Security Tool Development",
+          "description": "Write defensive security tools and scripts (log parsers, IOC scanners, triage collectors, enrichment and automation utilities) to production quality \u2014 safe input handling, no shell injection, bounded resources, secret redaction, least privilege, tests, hardened CI and release hygiene \u2014 starting from a bundled tested project scaffold. Use when coding a blue-team tool, reviewing a security script before it runs on production systems, or turning an ad-hoc analysis script into a maintained tool.",
+          "verification": "tested",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/security-tool-development"
+        },
+        {
+          "name": "ssh-hardening-build",
+          "title": "SSH Hardening Build",
+          "description": "Build and deploy a hardened OpenSSH server configuration \u2014 key/certificate-only authentication, AllowGroups, no root login, forwarding disabled, modern and post-quantum hybrid KEX (mlkem768x25519) intersected with the local OpenSSH version \u2014 as a drop-in generated from a JSON policy, verified with sshd -t/-T and a live client test that proves weak methods are refused. Use when hardening SSH on Linux servers, fixing SSH audit/CIS findings, or rolling out SSH certificates.",
+          "verification": "tested",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/ssh-hardening-build"
+        },
+        {
+          "name": "tls-reverse-proxy-build",
+          "title": "TLS Reverse Proxy Build (nginx)",
+          "description": "Build a hardened TLS reverse proxy in front of internal applications with nginx (or Caddy/HAProxy) \u2014 TLS 1.2/1.3 with modern ciphers, automated certificates, HSTS and security headers, HTTP\u2192HTTPS redirect, request size and rate limits, correct X-Forwarded-* handling, no version disclosure \u2014 and verify it with nginx -t, openssl and testssl.sh. Use when publishing a web application or admin interface, fixing TLS scan findings, or replacing an ad-hoc proxy config.",
+          "verification": "documented",
+          "version": "2.1.0",
+          "path": "skills/security-engineering/tls-reverse-proxy-build"
         }
       ]
     },

@@ -44,7 +44,7 @@ metadata:
 
 ## Related skills
 
-`field-normalization`, `log-pipeline-health`, `hunt-data-readiness`, `cloud-logging-baseline`
+`field-normalization`, `log-pipeline-health`, `hunt-data-readiness`, `cloud-logging-baseline`, `log-shipping-build`
 
 ## References
 

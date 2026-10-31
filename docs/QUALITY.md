@@ -20,7 +20,13 @@ Repository-wide:
 
 ## Test suite (`python3 -m unittest discover -s tests -v`)
 
-- `test_scripts.py` runs all 9 bundled scripts against fixtures in `tests/fixtures/`.
+- `test_scripts.py` runs the analysis scripts against fixtures in `tests/fixtures/`.
+- `test_engineering.py` tests the builder skills:
+  - generated nftables rulesets run under real traffic in isolated network namespaces, including a negative control;
+  - every `safe_apply.sh` path;
+  - generated sshd configs against a live sshd, with a weak config that must fail;
+  - the tool scaffold's own tests and CI.
+  These tests are skipped with a reason if unprivileged namespaces, nft or OpenSSH are unavailable.
 - `test_examples.py`:
   - compiles the embedded YARA rules (yara-python);
   - runs `sigma check` (0 errors and 0 issues required) and `sigma convert -t splunk` on every embedded Sigma rule;
@@ -30,7 +36,7 @@ Repository-wide:
 
 ## External checks run for v2.0.0 (not in CI)
 
-- `claude plugin validate .` (Claude Code 2.1.314) on the marketplace passed. `claude plugin validate <dir>` on all 253 installed SKILL.md files also passed.
+- `claude plugin validate .` (Claude Code 2.1.314) on the marketplace passed. `claude plugin validate <dir>` on all installed SKILL.md files also passed.
 - A headless `claude -p` session in a project with the SOC skills installed listed the expected skills (discovery check).
 - Reference URL check: all 687 unique reference URLs were fetched. Every broken link was fixed. Placeholder URLs in examples are expected not to resolve. Some government and vendor sites return 403/timeouts to automated clients and were left in place.
 
