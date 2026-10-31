@@ -45,7 +45,7 @@ Manage with `suricata-update` (add local rules file via `--local`), keep rules i
 
 ## Related skills
 
-`suricata-alert-triage`, `pcap-analysis`, `intel-to-detection`, `detection-as-code`
+`suricata-alert-triage`, `pcap-analysis`, `intel-to-detection`, `detection-as-code`, `ids-deployment-build`
 
 ## References
 

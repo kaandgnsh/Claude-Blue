@@ -34,7 +34,7 @@ Public storage (S3 `block_public_acls`, Azure `allow_blob_public_access`, GCS `u
 
 ## Related skills
 
-`cloud-posture-assessment`, `release-gate`, `k8s-admission-control`, `dockerfile-hardening`
+`cloud-posture-assessment`, `release-gate`, `k8s-admission-control`, `dockerfile-hardening`, `cloud-firewall-build`
 
 ## References
 

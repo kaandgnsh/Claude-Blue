@@ -114,6 +114,27 @@
       ]
     },
     {
+      "name": "blue-team-engineering",
+      "source": "./",
+      "description": "Claude-Blue engineering profile: 40 defensive security skills (security-engineering, linux-security, network-security, devsecops, secrets-management, detection-engineering).",
+      "version": "2.0.0",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "blue-team",
+        "engineering"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/security-engineering",
+        "./skills/linux-security",
+        "./skills/network-security",
+        "./skills/devsecops",
+        "./skills/secrets-management",
+        "./skills/detection-engineering"
+      ]
+    },
+    {
       "name": "blue-team-grc",
       "source": "./",
       "description": "Claude-Blue grc profile: 29 defensive security skills (security-governance, compliance-audit, third-party-risk, security-metrics, privacy-engineering, business-continuity, security-architecture).",
@@ -198,7 +219,7 @@
     {
       "name": "blue-team-platform",
       "source": "./",
-      "description": "Claude-Blue platform profile: 30 defensive security skills (vulnerability-management, asset-attack-surface, endpoint-security, linux-security, database-security, secrets-management).",
+      "description": "Claude-Blue platform profile: 39 defensive security skills (vulnerability-management, asset-attack-surface, endpoint-security, linux-security, database-security, secrets-management, security-engineering).",
       "version": "2.0.0",
       "license": "MIT",
       "keywords": [
@@ -213,7 +234,8 @@
         "./skills/endpoint-security",
         "./skills/linux-security",
         "./skills/database-security",
-        "./skills/secrets-management"
+        "./skills/secrets-management",
+        "./skills/security-engineering"
       ]
     },
     {
@@ -242,7 +264,7 @@
     {
       "name": "blue-team-all",
       "source": "./",
-      "description": "All 253 Claude-Blue skills in 49 categories. Large: may exceed the skill listing budget; prefer a profile plugin.",
+      "description": "All 262 Claude-Blue skills in 50 categories. Large: may exceed the skill listing budget; prefer a profile plugin.",
       "version": "2.0.0",
       "license": "MIT",
       "keywords": [
@@ -287,6 +309,7 @@
         "./skills/secrets-management",
         "./skills/security-architecture",
         "./skills/security-awareness",
+        "./skills/security-engineering",
         "./skills/security-governance",
         "./skills/security-metrics",
         "./skills/security-research",

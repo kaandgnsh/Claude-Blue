@@ -86,6 +86,15 @@
     "endpoint-security",
     "linux-security",
     "database-security",
-    "secrets-management"
+    "secrets-management",
+    "security-engineering"
+  ],
+  "engineering": [
+    "security-engineering",
+    "linux-security",
+    "network-security",
+    "devsecops",
+    "secrets-management",
+    "detection-engineering"
   ]
 }

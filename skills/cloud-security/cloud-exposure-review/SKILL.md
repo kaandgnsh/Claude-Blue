@@ -41,7 +41,7 @@ Data stores and admin interfaces reachable from the internet first; then compute
 
 ## Related skills
 
-`cloud-posture-assessment`, `s3-exposure-review`, `firewall-rule-review`, `external-attack-surface-review`
+`cloud-posture-assessment`, `s3-exposure-review`, `firewall-rule-review`, `external-attack-surface-review`, `cloud-firewall-build`
 
 ## References
 

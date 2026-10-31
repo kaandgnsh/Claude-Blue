@@ -48,7 +48,7 @@ Never delete rules directly from a review; propose changes through change manage
 
 ## Related skills
 
-`network-segmentation-review`, `external-attack-surface-review`, `cloud-exposure-review`
+`network-segmentation-review`, `external-attack-surface-review`, `cloud-exposure-review`, `host-firewall-build`
 
 ## References
 

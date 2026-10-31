@@ -17,6 +17,9 @@ Claude-Blue skills are instructions plus a few bundled, standard-library-only sc
 | `password-spray-detection` | `scripts/spray_detect.py`: sliding-window spray detection, success-after-spray |
 | `sigma-authoring`, `sigma-conversion` | All embedded Sigma rules pass `sigma check` with no issues and convert with the Splunk backend |
 | `yara-authoring` | Embedded YARA rule compiles with YARA 4 (yara-python) |
+| `host-firewall-build` | `scripts/nft_policy.py` policy validation (lockout refusal, unknown keys, exposed admin ports); `nft -c` syntax; `scripts/netns_test.py` real TCP/UDP traffic in isolated network namespaces, including a negative control; `scripts/safe_apply.sh` confirm, reject, killed-session rollback and invalid-file paths |
+| `ssh-hardening-build` | `scripts/sshd_harden.py` validation and `sshd -t`; `scripts/live_test.sh` against a live unprivileged sshd: key login works, only publickey offered, weak cipher/KEX/MAC and forwarding refused; a weak config fails |
+| `security-tool-development` | `scripts/new_tool.py` scaffold: generated project's own tests pass, its CI passes `gha_audit.py`, overwrite and bad names refused |
 | `pcap-analysis` | tshark conversation, DNS, HTTP, object export commands and JA3/JA4 field names (TShark 4.7) |
 
 ## Documentation-only integrations
@@ -27,4 +30,5 @@ All other commands and queries were written against current vendor documentation
 
 - No live connectors to SIEM, EDR, cloud or SaaS APIs. No credential handling.
 - No MCP server. Skills assume the operator or Claude uses whatever access the session already has.
+- `cloud-firewall-build`, `tls-reverse-proxy-build`, `ids-deployment-build`, `log-shipping-build` and `hardening-automation-build` are documentation-only: Terraform, nginx, Suricata, Vector/Fluent Bit and Ansible are not run by the test suite.
 - `security-automation` and `security-testing` categories are not yet included (see ROADMAP).

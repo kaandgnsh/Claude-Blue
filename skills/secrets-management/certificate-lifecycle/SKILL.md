@@ -36,7 +36,7 @@ ACME (Let's Encrypt, ZeroSSL, internal ACME CAs) via certbot/lego/cert-manager; 
 
 ## Related skills
 
-`secret-leak-response`, `adcs-security-review`, `kms-key-review`, `external-attack-surface-review`
+`secret-leak-response`, `adcs-security-review`, `kms-key-review`, `external-attack-surface-review`, `tls-reverse-proxy-build`
 
 ## References
 

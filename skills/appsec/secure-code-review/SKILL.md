@@ -47,7 +47,7 @@ Rate with exploitability + impact; avoid flagging theoretical issues without a r
 
 ## Related skills
 
-`sast-triage`, `threat-modeling`, `security-requirements`, `api-authorization-testing`
+`sast-triage`, `threat-modeling`, `security-requirements`, `api-authorization-testing`, `security-tool-development`
 
 ## References
 

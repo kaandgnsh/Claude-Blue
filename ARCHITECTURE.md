@@ -2,7 +2,7 @@
 
 ```
 skills/<category>/<skill>/SKILL.md      one task per skill (Agent Skills format)
-skills/<category>/<skill>/scripts/      optional stdlib-only helper scripts (9 skills)
+skills/<category>/<skill>/scripts/      optional stdlib Python / bash helper scripts (12 skills)
 tools/claude_blue.py                    validate · catalog · list · install · uninstall · extract-rules
 tools/profiles.json                     role-based install profiles (category groups)
 tools/data/attack-enterprise.json       ATT&CK Enterprise v20 snapshot used to validate technique IDs

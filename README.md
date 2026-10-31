@@ -1,12 +1,12 @@
 # Claude-Blue
 
 <p align="center">
-  <strong>A defensive cybersecurity skill library for Claude Code: 253 task-specific skills for SOC, DFIR, detection engineering, cloud, identity, AppSec, GRC, OT and AI security.</strong>
+  <strong>A defensive cybersecurity skill library for Claude Code: 262 task-specific skills for SOC, DFIR, detection engineering, security engineering, cloud, identity, AppSec, GRC, OT and AI security.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Skills-253-1F6FEB?style=for-the-badge" alt="253 skills">
-  <img src="https://img.shields.io/badge/Categories-49-444444?style=for-the-badge" alt="49 categories">
+  <img src="https://img.shields.io/badge/Skills-262-1F6FEB?style=for-the-badge" alt="262 skills">
+  <img src="https://img.shields.io/badge/Categories-50-444444?style=for-the-badge" alt="50 categories">
   <img src="https://img.shields.io/badge/Claude%20Code-Plugin%20%2B%20Skills-D97757?style=for-the-badge" alt="Claude Code plugin and skills">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/License-MIT-315C45?style=for-the-badge" alt="MIT license">
@@ -46,8 +46,13 @@ Skills are written in the [Agent Skills](https://agentskills.io/specification) f
 
 ## Features
 
-- **253 independent skills in 49 categories**, each with its own scope and procedure. A validator rejects repeated boilerplate.
-- **Tested where it counts.** 13 skills are marked `tested`. Their 9 bundled standard-library scripts and their embedded Sigma, YARA and tshark examples run in CI. The rest are clearly labelled `documented`.
+- **262 independent skills in 50 categories**, each with its own scope and procedure. A validator rejects repeated boilerplate.
+- **Builds controls, not just reviews.** The `security-engineering` category produces deployable blue-team artifacts:
+  - an nftables host firewall generated from a policy and tested with real traffic in isolated network namespaces, with an auto-rollback apply that prevents lockout;
+  - a hardened SSH configuration with post-quantum KEX, live-tested against weak clients;
+  - a secure scaffold for blue-team tools;
+  - cloud firewalls as code, a TLS reverse proxy, IDS deployment, log shipping and Ansible hardening automation.
+- **Tested where it counts.** 16 skills are marked `tested`. Their bundled standard-library scripts and their embedded Sigma, YARA and tshark examples run in CI. The rest are clearly labelled `documented`.
 - **Bundled scripts:** timeline merging, beacon scoring, `.eml` header analysis, IOC extraction, GitHub Actions auditing, Kubernetes RBAC auditing, CloudTrail summarizing, IAM policy linting and password-spray detection.
 - **Current frameworks.** ATT&CK IDs are validated against ATT&CK **v20**. Skills also align with NIST SP 800-61r3, CSF 2.0, OWASP ASVS 5.0, the OWASP API Top 10 (2023) and the OWASP LLM Top 10 (2025).
 - **Role-based profiles** (`soc`, `dfir`, `detection`, `cloud`, `identity`, `appsec`, `grc`, `ot`, `ai`, …) keep installs within Claude Code's skill-listing context budget.
@@ -72,6 +77,7 @@ Skills are written in the [Agent Skills](https://agentskills.io/specification) f
 | **Application & supply chain** | `appsec` · `api-security` · `devsecops` · `supply-chain-security` · `secrets-management` · `web-application-defense` |
 | **Data & privacy** | `data-security` · `privacy-engineering` · `database-security` |
 | **Risk & resilience** | `security-governance` · `compliance-audit` · `third-party-risk` · `security-metrics` · `business-continuity` · `security-architecture` · `asset-attack-surface` · `vulnerability-management` · `security-research` · `security-awareness` |
+| **Security engineering** | `security-engineering` (firewall, SSH, TLS proxy, IDS, log shipping, hardening automation, cloud firewall, tool development) |
 | **Specialized** | `ai-security` · `ot-ics-security` |
 
 The full index with every skill and its description is in **[CATALOG.md](CATALOG.md)**.
@@ -104,6 +110,7 @@ One-step install lines for each plugin:
 /plugin install blue-team-identity --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-appsec --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-platform --marketplace kaandgnsh/Claude-Blue
+/plugin install blue-team-engineering --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-grc --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-ot --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-ai --marketplace kaandgnsh/Claude-Blue
@@ -125,7 +132,7 @@ python3 tools/claude_blue.py uninstall                              # remove onl
 ```
 
 > [!TIP]
-> Prefer a profile over `--all`. Claude Code always lists skill names, but it drops descriptions once the listing exceeds its context budget. 253 descriptions exceed that budget, which makes automatic triggering less reliable. See [docs/INSTALL.md](docs/INSTALL.md) for details.
+> Prefer a profile over `--all`. Claude Code always lists skill names, but it drops descriptions once the listing exceeds its context budget. 262 descriptions exceed that budget, which makes automatic triggering less reliable. See [docs/INSTALL.md](docs/INSTALL.md) for details.
 
 ## Usage
 
@@ -136,6 +143,8 @@ Ask in plain language and the matching skill loads automatically:
 > Is this email spoofed? (attach the .eml)
 > We found an AWS access key in a public repo, walk me through containment and scoping
 > Review .github/workflows for pwn-request and script-injection issues
+> Build an nftables firewall for this web server: SSH only from 10.20.0.0/24, HTTPS for everyone
+> Harden sshd on our fleet and give me an Ansible role to roll it out
 > Build a Sigma rule for LSASS dumping via comsvcs.dll and convert it to Splunk
 ```
 
@@ -153,12 +162,14 @@ python3 skills/devsecops/github-actions-hardening/scripts/gha_audit.py .github/w
 
 | Check | Result |
 |---|---|
-| Catalog validator (`tools/claude_blue.py validate`) | 0 errors across 253 skills |
-| Unit tests (`python3 -m unittest discover -s tests`) | 34 / 34 passing |
+| Catalog validator (`tools/claude_blue.py validate`) | 0 errors across 262 skills |
+| Unit tests (`python3 -m unittest discover -s tests`) | 49 / 49 passing |
+| Generated firewall (real traffic in network namespaces) | Every probe matches the policy; an overly permissive ruleset is caught |
+| Generated sshd config (live server) | Key login works; passwords, CBC, SHA-1 KEX/MAC and forwarding refused |
 | Embedded Sigma rules | `sigma check` with 0 errors and 0 issues; converts to Splunk SPL |
 | Embedded YARA rules | Compile with YARA 4 |
 | `claude plugin validate .` | Passes |
-| Installed skills (`claude plugin validate ~/.claude/skills`) | All 253 pass |
+| Installed skills (`claude plugin validate ~/.claude/skills`) | All pass |
 
 The validator checks for:
 
