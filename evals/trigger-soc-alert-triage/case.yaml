@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-soc-alert-triage
+description: "Should load alert-triage from the blue-team-soc plugin."
+tags: [soc, should-trigger]
+execution:
+  prompt: "An EDR alert says 'Suspicious PowerShell download cradle' on host FIN-WS-044 for user j.martin at 09:12 UTC. Walk me through triaging it: what do I check first, and how do I decide true vs. false positive?"
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-alert-triage
+    tool: Skill
+    input_match: ":(alert-triage|edr-alert-investigation)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(true positive|false positive|benign)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."

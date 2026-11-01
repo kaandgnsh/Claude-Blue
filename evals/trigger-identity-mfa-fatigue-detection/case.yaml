@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-identity-mfa-fatigue-detection
+description: "Should load mfa-fatigue-detection from the blue-team-identity plugin."
+tags: [identity, should-trigger]
+execution:
+  prompt: "One of our users got around 30 Okta Verify push notifications overnight and approved one by accident. How do we detect this pattern and respond?"
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-mfa-fatigue-detection
+    tool: Skill
+    input_match: ":(mfa-fatigue-detection|account-compromise-investigation|okta-log-investigation)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(push|number matching|session)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."

@@ -1,0 +1,2 @@
+{"ts": 1761819100.0, "fuid": "F1", "tx_hosts": ["198.51.100.3"], "rx_hosts": ["10.0.0.9"], "mime_type": "application/x-dosexec", "sha256": "abababababababababababababababababababababababababababababababab", "filename": "invoice.exe"}
+{"ts": 1761819101.0, "fuid": "F2", "tx_hosts": ["198.51.100.3"], "rx_hosts": ["10.0.0.9"], "mime_type": "text/html"}

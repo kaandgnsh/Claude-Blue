@@ -17,6 +17,8 @@ jobs:
           sudo apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y tshark nftables openssh-server iproute2 util-linux
           python -m pip install yara-python sigma-cli pysigma-backend-splunk
+      - name: osquery image for the osquery-investigation query tests
+        run: docker pull osquery/osquery:5.17.0-ubuntu24.04
       - name: Allow unprivileged user namespaces (firewall tests run in isolated netns)
         run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
       - run: python tools/claude_blue.py validate

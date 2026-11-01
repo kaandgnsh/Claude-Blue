@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.2.0 — 2026-11-01 (automation, testing, verification)
+
+### Added
+- `security-automation` category (6 skills): `soar-playbook-design` (tested; `playbook_lint.py` checks a vendor-neutral step graph for dangling and unreachable steps, non-terminating paths, unbounded loops, decisions without a default, disruptive actions without approval/rollback/idempotency key, auto-approved actions without exclusions and inline secrets), `playbook-testing`, `automation-risk-review`, `automated-containment-guardrails`, `enrichment-automation`, `automation-metrics`.
+- `security-testing` category (6 skills): `detection-validation` (tested; `coverage_matrix.py` scores an emulation run against exported alerts as detected / detected-other / missed with latency), `purple-team-exercise`, `control-validation`, `security-test-planning`, `attack-simulation-safety`, `bas-results-review`.
+- `automation` and `purple` install profiles and plugins; `security-testing` added to the `detection` profile.
+- Newly `tested` skills with scripts and fixtures: `zeek-log-analysis` (`zeek_triage.py`), `okta-log-investigation` (`okta_hunts.py`), `entra-signin-investigation` (`signin_review.py`), `osquery-investigation` (`osquery_diff.py`, plus the whole Linux query library run in an osquery 5.17 container against a planted scenario).
+- `references/` files loaded on demand: Windows event IDs (`windows-event-log-analysis`), AADSTS result codes (`entra-signin-investigation`), ASVS 5.0 / OWASP Top 10:2025 / API Top 10 2023 / LLM Top 10 2025 mappings (`security-requirements`).
+- Skill-trigger evals: `evals/cases.json` → generated `evals/*/case.yaml` (should-trigger and should-not-trigger per profile) and `claude_blue.py eval-plugin <profile> <dir>` to build a standalone plugin for `claude plugin eval`.
+- `tools/check_links.py` and `tools/refresh_attack.py`, run weekly by the new non-blocking `maintenance.yml` workflow. CI also pulls the osquery image.
+- 26 new tests (75 total).
+
+### Changed
+- Validator: reference files must be Markdown, cite a source and be named in SKILL.md; eval cases must name existing skills in the case's profile and use JavaScript-compatible regexes; generated eval files must be current.
+
+### Fixed
+- The installer copied and hashed `__pycache__`/`.pyc` files, so running a bundled script could make an installed skill look locally modified and block upgrade/uninstall. Bytecode caches are now neither shipped nor hashed.
+- Found by the new tests and checks: Docker mounts `/dev/shm` `noexec` and osquery's systemd tables print D-Bus warnings in containers (the test now mounts an exec tmpfs and treats only a non-zero exit as failure); `ipaddress.is_global` treats documentation ranges as private, so `zeek_triage.py` now uses explicit RFC 1918/6598 ranges; three dead or wrong reference URLs in the new skills.
+- Evals: a `tool_used` grader with only `max: 0` defaults `min` to 1, so negative cases set `min: 0`; grader regexes are JavaScript (`flags: i`, no `(?i)`).
+
 ## 2.1.0 — 2026-10-31 (security engineering)
 
 ### Added

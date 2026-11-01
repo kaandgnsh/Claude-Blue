@@ -1,0 +1,384 @@
+{
+ "value": [
+  {
+   "createdDateTime": "2026-10-30T08:00:00Z",
+   "userPrincipalName": "alice@contoso.example",
+   "ipAddress": "198.51.100.4",
+   "status": {
+    "errorCode": 0
+   },
+   "location": {
+    "city": "Berlin",
+    "countryOrRegion": "DE",
+    "geoCoordinates": {
+     "latitude": 52.52,
+     "longitude": 13.4
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": "s-1"
+  },
+  {
+   "createdDateTime": "2026-10-30T08:40:00Z",
+   "userPrincipalName": "alice@contoso.example",
+   "ipAddress": "203.0.113.80",
+   "status": {
+    "errorCode": 0
+   },
+   "location": {
+    "city": "Ashburn",
+    "countryOrRegion": "US",
+    "geoCoordinates": {
+     "latitude": 39.04,
+     "longitude": -77.49
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": "s-1"
+  },
+  {
+   "createdDateTime": "2026-10-30T09:00:00Z",
+   "userPrincipalName": "bob@contoso.example",
+   "ipAddress": "198.51.100.5",
+   "status": {
+    "errorCode": 0
+   },
+   "location": {
+    "city": "Munich",
+    "countryOrRegion": "DE",
+    "geoCoordinates": {
+     "latitude": 48.14,
+     "longitude": 11.58
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T13:00:00Z",
+   "userPrincipalName": "bob@contoso.example",
+   "ipAddress": "198.51.100.6",
+   "status": {
+    "errorCode": 0
+   },
+   "location": {
+    "city": "Hamburg",
+    "countryOrRegion": "DE",
+    "geoCoordinates": {
+     "latitude": 53.55,
+     "longitude": 9.99
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:00:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:01:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:02:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:03:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:04:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:05:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:06:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:07:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:08:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:09:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:10:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:11:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 50126
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T10:30:00Z",
+   "userPrincipalName": "carol@contoso.example",
+   "ipAddress": "192.0.2.7",
+   "status": {
+    "errorCode": 0
+   },
+   "location": {
+    "city": "Amsterdam",
+    "countryOrRegion": "NL",
+    "geoCoordinates": {
+     "latitude": 52.37,
+     "longitude": 4.9
+    }
+   },
+   "clientAppUsed": "IMAP4",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T11:00:00Z",
+   "userPrincipalName": "dave@contoso.example",
+   "ipAddress": "192.0.2.8",
+   "status": {
+    "errorCode": 500121
+   },
+   "location": {
+    "city": "Paris",
+    "countryOrRegion": "FR",
+    "geoCoordinates": {
+     "latitude": 48.86,
+     "longitude": 2.35
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T11:01:00Z",
+   "userPrincipalName": "dave@contoso.example",
+   "ipAddress": "192.0.2.8",
+   "status": {
+    "errorCode": 500121
+   },
+   "location": {
+    "city": "Paris",
+    "countryOrRegion": "FR",
+    "geoCoordinates": {
+     "latitude": 48.86,
+     "longitude": 2.35
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  },
+  {
+   "createdDateTime": "2026-10-30T11:02:00Z",
+   "userPrincipalName": "dave@contoso.example",
+   "ipAddress": "192.0.2.8",
+   "status": {
+    "errorCode": 500121
+   },
+   "location": {
+    "city": "Paris",
+    "countryOrRegion": "FR",
+    "geoCoordinates": {
+     "latitude": 48.86,
+     "longitude": 2.35
+    }
+   },
+   "clientAppUsed": "Browser",
+   "appDisplayName": "Office 365 Exchange Online",
+   "sessionId": null
+  }
+ ]
+}

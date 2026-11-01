@@ -23,9 +23,11 @@ PROFILES_FILE = ROOT / "tools" / "profiles.json"
 CATALOG_JSON = ROOT / "catalog.json"
 CATALOG_MD = ROOT / "CATALOG.md"
 MARKETPLACE = ROOT / ".claude-plugin" / "marketplace.json"
+EVALS = ROOT / "evals"
+EVAL_CASES = EVALS / "cases.json"
 PLUGIN_PREFIX = "blue-team"  # names starting with "claude-" are reserved by Claude Code
 MANIFEST_NAME = ".claude-blue-manifest.json"
-VERSION = "2.0.0"
+VERSION = "2.2.0"
 
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
@@ -224,6 +226,16 @@ def validate(check_catalog: bool = True):
         for link in RELATIVE_LINK_RE.findall(prose_only):
             if not (skill_dir / link.split("#")[0]).exists():
                 errors.append(f"{rel}: broken relative link {link!r}")
+        ref_dir = skill_dir / "references"
+        if ref_dir.is_dir():
+            for ref in sorted(ref_dir.iterdir()):
+                ref_rel = f"references/{ref.name}"
+                if ref.suffix != ".md":
+                    errors.append(f"{skill['path']}/{ref_rel}: reference files must be Markdown")
+                elif ref_rel not in body:
+                    errors.append(f"{rel}: {ref_rel} exists but SKILL.md never points to it (it will never be read)")
+                elif not URL_RE.search(ref.read_text(encoding="utf-8")):
+                    errors.append(f"{skill['path']}/{ref_rel}: reference file cites no source URL")
         for script in set(SCRIPT_REF_RE.findall(body)):
             if not (skill_dir / script).is_file():
                 errors.append(f"{rel}: referenced script {script!r} not found")
@@ -251,7 +263,11 @@ def validate(check_catalog: bool = True):
             if not (SKILLS / cat).is_dir():
                 errors.append(f"tools/profiles.json: profile {profile!r} references unknown category {cat!r}")
 
+    eval_files, eval_errors = render_evals(skills)
+    errors.extend(eval_errors)
+
     if check_catalog and not errors:
+        errors.extend(stale_evals(eval_files))
         expected_json, expected_md = render_catalog(skills)
         if not CATALOG_JSON.is_file() or CATALOG_JSON.read_text(encoding="utf-8") != expected_json:
             errors.append("catalog.json is stale; run: python3 tools/claude_blue.py catalog")
@@ -318,6 +334,117 @@ def render_catalog(skills):
     return json.dumps(catalog, indent=2) + "\n", "\n".join(lines) + "\n"
 
 
+
+def q(text: str) -> str:
+    """YAML double-quoted scalar (JSON strings are valid YAML)."""
+    return json.dumps(text, ensure_ascii=False)
+
+
+def render_evals(skills) -> tuple[dict, list[str]]:
+    """Build evals/<case>/case.yaml from evals/cases.json; return ({relative path: text}, errors)."""
+    if not EVAL_CASES.is_file():
+        return {}, []
+    spec = json.loads(EVAL_CASES.read_text(encoding="utf-8"))
+    by_name = {s["name"]: s for s in skills}
+    profiles = load_profiles()
+    files, errors = {}, []
+    tools = "[Skill, Read, Glob, Grep]"
+    for case in spec.get("positive", []):
+        skill, profile = by_name.get(case["skill"]), case["profile"]
+        if skill is None or any(a not in by_name for a in case.get("also", [])):
+            errors.append(f"evals/cases.json: unknown skill in {[case['skill'], *case.get('also', [])]}")
+            continue
+        outside = [n for n in [case["skill"], *case.get("also", [])] if by_name[n]["category"] not in profiles.get(profile, [])]
+        if outside:
+            errors.append(f"evals/cases.json: {outside} not in profile {profile!r}")
+            continue
+        if case["expect"].startswith("(?"):
+            errors.append(f"evals/cases.json: {case['skill']!r} pattern uses inline flags; graders use JS RegExp (flags: i)")
+            continue
+        try:
+            re.compile(case["expect"])
+        except re.error as exc:
+            errors.append(f"evals/cases.json: bad regex for {case['skill']!r}: {exc}")
+            continue
+        name = f"trigger-{profile}-{case['skill']}"
+        files[f"evals/{name}/case.yaml"] = "\n".join([
+            "# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.",
+            'schema_version: "1.0"',
+            f"name: {name}",
+            f"description: {q('Should load ' + case['skill'] + ' from the ' + PLUGIN_PREFIX + '-' + profile + ' plugin.')}",
+            f"tags: [{profile}, should-trigger]",
+            "execution:",
+            f"  prompt: {q(case['prompt'])}",
+            "  max_turns: 6",
+            "  timeout_seconds: 300",
+            f"  allowed_tools: {tools}",
+            "runs: 3",
+            "graders:",
+            "  - type: tool_used",
+            f"    name: fired-{case['skill']}",
+            "    tool: Skill",
+            f"    input_match: {q(':(' + '|'.join([case['skill'], *case.get('also', [])]) + ')' + chr(92) + 'b')}",
+            "    min: 1",
+            "  - type: regex",
+            "    name: covers-key-steps",
+            "    target: last_message",
+            f"    pattern: {q(case['expect'])}",
+            '    flags: "i"',
+            "  - type: llm",
+            "    name: actionable-defensive-answer",
+            "    criteria: " + q("The answer gives concrete steps specific to this request (checks, commands, queries, "
+                               "templates or decision criteria) rather than generic security advice."),
+            "",
+        ])
+    for case in spec.get("negative", []):
+        if case["profile"] not in profiles:
+            errors.append(f"evals/cases.json: unknown profile {case['profile']!r}")
+            continue
+        name = f"{case['name']}-{case['profile']}"
+        files[f"evals/{name}/case.yaml"] = "\n".join([
+            "# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.",
+            'schema_version: "1.0"',
+            f"name: {name}",
+            f"description: {q('Unrelated request: no Claude-Blue skill from ' + PLUGIN_PREFIX + '-' + case['profile'] + ' should load.')}",
+            f"tags: [{case['profile']}, should-not-trigger]",
+            "execution:",
+            f"  prompt: {q(case['prompt'])}",
+            "  max_turns: 4",
+            "  timeout_seconds: 180",
+            f"  allowed_tools: {tools}",
+            "runs: 3",
+            "graders:",
+            "  - type: tool_used",
+            "    name: no-skill-loaded",
+            "    tool: Skill",
+            "    min: 0",
+            "    max: 0",
+            "  - type: llm",
+            "    name: answers-the-actual-question",
+            "    criteria: " + q("The answer addresses the user's request directly and does not bring in unrelated "
+                               "cybersecurity procedures."),
+            "",
+        ])
+    names = [p.split("/")[1] for p in files]
+    for dup in {n for n in names if names.count(n) > 1}:
+        errors.append(f"evals/cases.json: duplicate case name {dup!r}")
+    return files, errors
+
+
+def stale_evals(files) -> list[str]:
+    problems = []
+    for rel, text in files.items():
+        path = ROOT / rel
+        if not path.is_file() or path.read_text(encoding="utf-8") != text:
+            problems.append(f"{rel} is stale; run: python3 tools/claude_blue.py catalog")
+    if EVALS.is_dir():
+        for path in EVALS.glob("*/case.yaml"):
+            rel = path.relative_to(ROOT).as_posix()
+            if rel not in files and "Generated from evals/cases.json" in path.read_text(encoding="utf-8"):
+                problems.append(f"{rel} is no longer in evals/cases.json; delete it or run catalog")
+    return problems
+
+
 def render_marketplace(skills) -> str:
     """One plugin per install profile (plus one with everything), all sourced from the repo root."""
     cats = sorted({s["category"] for s in skills})
@@ -362,11 +489,19 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+BYTECODE = ("__pycache__", "*.pyc")
+
+
+def is_bytecode(path: Path) -> bool:
+    return "__pycache__" in path.parts or path.suffix == ".pyc"
+
+
 def tree_hashes(directory: Path) -> dict:
+    """Content hashes of a skill tree, ignoring Python bytecode caches created by running scripts."""
     return {
         p.relative_to(directory).as_posix(): sha256(p)
         for p in sorted(directory.rglob("*"))
-        if p.is_file() and not p.is_symlink()
+        if p.is_file() and not p.is_symlink() and not is_bytecode(p.relative_to(directory))
     }
 
 
@@ -479,7 +614,7 @@ def install(args) -> int:
         name, source, dest = skill["name"], ROOT / skill["path"], target / skill["name"]
         staging = Path(tempfile.mkdtemp(prefix=f".cb-staging-{name}-", dir=target))
         try:
-            shutil.copytree(source, staging / name, symlinks=True)
+            shutil.copytree(source, staging / name, symlinks=True, ignore=shutil.ignore_patterns(*BYTECODE))
             if tree_hashes(staging / name) != source_hashes:
                 raise SystemExit(f"Copy verification failed for {name}")
             if action == "upgrade":
@@ -559,7 +694,54 @@ def cmd_catalog(args) -> int:
     CATALOG_MD.write_text(expected_md, encoding="utf-8")
     MARKETPLACE.parent.mkdir(exist_ok=True)
     MARKETPLACE.write_text(render_marketplace(skills), encoding="utf-8")
-    print(f"wrote catalog.json, CATALOG.md and .claude-plugin/marketplace.json ({len(skills)} skills)")
+    eval_files, _ = render_evals(skills)
+    for path in EVALS.glob("*/case.yaml") if EVALS.is_dir() else []:
+        rel = path.relative_to(ROOT).as_posix()
+        if rel not in eval_files and "Generated from evals/cases.json" in path.read_text(encoding="utf-8"):
+            path.unlink()
+            if not any(path.parent.iterdir()):
+                path.parent.rmdir()
+    for rel, text in eval_files.items():
+        (ROOT / rel).parent.mkdir(parents=True, exist_ok=True)
+        (ROOT / rel).write_text(text, encoding="utf-8")
+    print(f"wrote catalog.json, CATALOG.md, .claude-plugin/marketplace.json ({len(skills)} skills) "
+          f"and {len(eval_files)} eval cases")
+    return 0
+
+
+def cmd_eval_plugin(args) -> int:
+    """Assemble a standalone plugin for one profile (skills + evals) so `claude plugin eval` can load it."""
+    skills, errors, _ = validate(check_catalog=False)
+    if errors:
+        for e in errors:
+            print("ERROR:", e)
+        return 1
+    if args.profile not in load_profiles():
+        raise SystemExit(f"Unknown profile {args.profile!r}; see: python3 tools/claude_blue.py list --profiles")
+    out = Path(args.out).expanduser().resolve()
+    if out.exists() and any(out.iterdir()):
+        if not (out / ".claude-plugin" / "plugin.json").is_file():
+            raise SystemExit(f"{out} exists and is not a plugin built by this command; choose an empty directory")
+        shutil.rmtree(out)
+    cats = set(load_profiles()[args.profile])
+    name = f"{PLUGIN_PREFIX}-{args.profile}"
+    (out / ".claude-plugin").mkdir(parents=True)
+    (out / ".claude-plugin" / "plugin.json").write_text(json.dumps(
+        {"name": name, "version": VERSION, "description": f"Claude-Blue {args.profile} profile (eval build)"}, indent=2) + "\n")
+    count = 0
+    for skill in skills:
+        if skill["category"] in cats:
+            shutil.copytree(ROOT / skill["path"], out / "skills" / skill["name"], ignore=shutil.ignore_patterns(*BYTECODE))
+            count += 1
+    eval_files, _ = render_evals(skills)
+    cases = 0
+    for rel, text in eval_files.items():
+        if f"tags: [{args.profile}," in text:
+            (out / rel).parent.mkdir(parents=True, exist_ok=True)
+            (out / rel).write_text(text, encoding="utf-8")
+            cases += 1
+    print(f"built {name} at {out}: {count} skills, {cases} eval cases")
+    print(f"run: claude plugin eval {out} --no-publish   (add --runs 1 --max-cost-usd 2 for a cheap smoke run)")
     return 0
 
 
@@ -603,6 +785,9 @@ def main(argv=None) -> int:
     sub.add_parser("validate", help="validate skills, references, ATT&CK IDs and catalog freshness")
     sub.add_parser("evaluate", help="alias of validate (kept for CI compatibility)")
     sub.add_parser("catalog", help="regenerate catalog.json, CATALOG.md and the plugin marketplace")
+    xp = sub.add_parser("eval-plugin", help="build a standalone profile plugin with its eval cases for `claude plugin eval`")
+    xp.add_argument("profile")
+    xp.add_argument("out", help="output directory (created; replaced if it holds an earlier eval build)")
     lp = sub.add_parser("list", help="list skills or install profiles")
     lp.add_argument("--category", action="append")
     lp.add_argument("--profiles", action="store_true")
@@ -625,7 +810,8 @@ def main(argv=None) -> int:
             p.add_argument("--verbose", action="store_true")
     args = ap.parse_args(argv)
     handlers = {"validate": cmd_validate, "evaluate": cmd_validate, "catalog": cmd_catalog, "list": cmd_list,
-                "extract-rules": cmd_extract_rules, "install": install, "uninstall": uninstall}
+                "extract-rules": cmd_extract_rules, "install": install, "uninstall": uninstall,
+                "eval-plugin": cmd_eval_plugin}
     return handlers[args.command](args)
 
 

@@ -4,8 +4,8 @@ description: Investigate and sweep endpoints with osquery SQL (osqueryi, Fleet, 
 license: MIT
 metadata:
   category: endpoint-security
-  version: "2.0.0"
-  verification: documented
+  version: "2.2.0"
+  verification: tested
 ---
 
 # osquery Investigation
@@ -43,6 +43,21 @@ SELECT path, sha256 FROM hash WHERE path = '/usr/local/bin/suspicious';
 SELECT path, size, mtime FROM file WHERE path LIKE '/var/www/%%' AND filename LIKE '%.php' AND mtime > (strftime('%s','now') - 86400*7);
 ```
 Table availability differs per OS — check https://github.com/osquery/osquery/tree/master/specs for the deployed version.
+
+The Linux queries above are executed by the test suite inside an osquery 5.17 container against a planted scenario (deleted-binary implant, `/dev/shm` process, SSH key, cron entry, web shell). `startup_items` and `systemd_units` need the host's D-Bus; in containers they return no systemd rows.
+
+## Baseline diffs
+
+Save results on a known-good day and diff later to see only what changed:
+
+```sh
+osqueryi --json "SELECT name, path, source FROM startup_items" > startup_baseline.json
+# ... later, or on the suspect host
+osqueryi --json "SELECT name, path, source FROM startup_items" > startup_now.json
+python3 scripts/osquery_diff.py --baseline startup_baseline.json --current startup_now.json --key name --key path
+```
+
+Works with Fleet/osqueryd result logs too (JSON lines with `hostIdentifier` and `columns`, or `snapshot`), grouped per host; hosts without a baseline are reported as such. Volatile columns (`pid`, times, counters) are ignored unless named with `--key`. Exit code 1 when rows were added.
 
 ## Fleet sweeps
 

@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-soc-phishing-triage
+description: "Should load phishing-triage from the blue-team-soc plugin."
+tags: [soc, should-trigger]
+execution:
+  prompt: "A user reported an email asking them to re-validate their Microsoft 365 password via a link. How should the SOC triage this report and decide on purge and block actions?"
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-phishing-triage
+    tool: Skill
+    input_match: ":(phishing-triage|email-header-analysis)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(purge|header|sender|url)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."

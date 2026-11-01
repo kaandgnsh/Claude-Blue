@@ -4,13 +4,15 @@ description: Investigate Windows Security, System, PowerShell, Sysmon, RDP, Task
 license: MIT
 metadata:
   category: windows-security
-  version: "2.0.0"
+  version: "2.2.0"
   verification: documented
 ---
 
 # Windows Event Log Analysis
 
 ## Key event IDs
+
+The most used IDs are below. The full reference (logon types, 4625 status codes, account and directory changes, share and WFP events, tampering, all Sysmon IDs, required audit subcategories) is in [references/event-ids.md](references/event-ids.md); read it when an ID or code is not in this table.
 
 | ID | Log | Meaning | Notes |
 |---|---|---|---|
@@ -60,7 +62,7 @@ Splunk (Windows TA): `index=wineventlog EventCode=4624 Logon_Type=10 | stats cou
 - Correlate by **Logon ID** (`TargetLogonId` in 4624 ↔ `SubjectLogonId` in 4688/4672) to tie processes to the logon that spawned them.
 - Network logons (type 3) from workstations to many other workstations = lateral movement candidate.
 - Absence of events: check audit policy (`auditpol /get /category:*`) and log size/retention before concluding.
-- 4625 `Status`/`SubStatus`: `0xC000006A` bad password, `0xC0000064` user doesn't exist, `0xC0000234` locked out, `0xC0000072` disabled.
+- 4625 `Status`/`SubStatus`: `0xC000006A` bad password, `0xC0000064` user doesn't exist, `0xC0000234` locked out, `0xC0000072` disabled (all codes in the reference file).
 
 ## Related skills
 

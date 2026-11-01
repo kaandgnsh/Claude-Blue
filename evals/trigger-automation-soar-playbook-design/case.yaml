@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-automation-soar-playbook-design
+description: "Should load soar-playbook-design from the blue-team-automation plugin."
+tags: [automation, should-trigger]
+execution:
+  prompt: "Design a SOAR playbook for reported phishing emails that enriches the URLs, decides a verdict and purges the message from all mailboxes. I want it to fail safely."
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-soar-playbook-design
+    tool: Skill
+    input_match: ":(soar-playbook-design)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(approval|rollback|kill switch)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."

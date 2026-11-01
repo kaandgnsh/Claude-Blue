@@ -25,7 +25,8 @@
     "threat-hunting",
     "windows-security",
     "active-directory-security",
-    "deception"
+    "deception",
+    "security-testing"
   ],
   "hunting": [
     "threat-hunting",
@@ -96,5 +97,19 @@
     "devsecops",
     "secrets-management",
     "detection-engineering"
+  ],
+  "automation": [
+    "security-automation",
+    "soc-operations",
+    "incident-response",
+    "edr-operations",
+    "threat-intelligence"
+  ],
+  "purple": [
+    "security-testing",
+    "detection-engineering",
+    "threat-hunting",
+    "windows-security",
+    "active-directory-security"
   ]
 }

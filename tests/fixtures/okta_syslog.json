@@ -1,0 +1,334 @@
+[
+ {
+  "published": "2026-10-30T08:00:00.000Z",
+  "eventType": "user.session.start",
+  "actor": {
+   "alternateId": "alice@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.10"
+  },
+  "target": [],
+  "securityContext": {
+   "asNumber": 64500
+  },
+  "authenticationContext": {
+   "externalSessionId": "102a"
+  }
+ },
+ {
+  "published": "2026-10-30T09:00:00.000Z",
+  "eventType": "user.mfa.factor.reset_all",
+  "actor": {
+   "alternateId": "helpdesk@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "10.1.1.5"
+  },
+  "target": [
+   {
+    "type": "User",
+    "alternateId": "alice@example.com"
+   }
+  ]
+ },
+ {
+  "published": "2026-10-30T10:30:00.000Z",
+  "eventType": "user.session.start",
+  "actor": {
+   "alternateId": "alice@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "203.0.113.66"
+  },
+  "target": [],
+  "securityContext": {
+   "asNumber": 64511
+  },
+  "authenticationContext": {
+   "externalSessionId": "102b"
+  }
+ },
+ {
+  "published": "2026-10-30T11:00:00.000Z",
+  "eventType": "user.session.start",
+  "actor": {
+   "alternateId": "bob@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.20"
+  },
+  "target": [],
+  "securityContext": {
+   "asNumber": 64500
+  },
+  "authenticationContext": {
+   "externalSessionId": "102c"
+  }
+ },
+ {
+  "published": "2026-10-30T11:30:00.000Z",
+  "eventType": "user.authentication.sso",
+  "actor": {
+   "alternateId": "bob@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "192.0.2.99"
+  },
+  "target": [],
+  "securityContext": {
+   "asNumber": 64999
+  },
+  "authenticationContext": {
+   "externalSessionId": "102c"
+  }
+ },
+ {
+  "published": "2026-10-30T12:00:00.000Z",
+  "eventType": "user.mfa.okta_verify.deny_push",
+  "actor": {
+   "alternateId": "carol@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "FAILURE"
+  },
+  "client": {
+   "ipAddress": "192.0.2.50"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T12:01:00.000Z",
+  "eventType": "user.mfa.okta_verify.deny_push",
+  "actor": {
+   "alternateId": "carol@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "FAILURE"
+  },
+  "client": {
+   "ipAddress": "192.0.2.50"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T12:02:00.000Z",
+  "eventType": "user.mfa.okta_verify.deny_push",
+  "actor": {
+   "alternateId": "carol@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "FAILURE"
+  },
+  "client": {
+   "ipAddress": "192.0.2.50"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T12:03:00.000Z",
+  "eventType": "user.mfa.okta_verify.deny_push",
+  "actor": {
+   "alternateId": "carol@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "FAILURE"
+  },
+  "client": {
+   "ipAddress": "192.0.2.50"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T12:04:00.000Z",
+  "eventType": "user.mfa.okta_verify.deny_push",
+  "actor": {
+   "alternateId": "carol@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "FAILURE"
+  },
+  "client": {
+   "ipAddress": "192.0.2.50"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T12:05:00.000Z",
+  "eventType": "user.mfa.okta_verify.deny_push",
+  "actor": {
+   "alternateId": "carol@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "FAILURE"
+  },
+  "client": {
+   "ipAddress": "192.0.2.50"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T12:07:00.000Z",
+  "eventType": "user.authentication.auth_via_mfa",
+  "actor": {
+   "alternateId": "carol@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "192.0.2.50"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T12:00:30.000Z",
+  "eventType": "user.authentication.auth_via_mfa",
+  "actor": {
+   "alternateId": "dave@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.10"
+  },
+  "target": []
+ },
+ {
+  "published": "2026-10-30T13:00:00.000Z",
+  "eventType": "system.idp.lifecycle.create",
+  "actor": {
+   "alternateId": "eve@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.10"
+  },
+  "target": [
+   {
+    "type": "IdentityProvider",
+    "displayName": "Okta IdP 2"
+   }
+  ]
+ },
+ {
+  "published": "2026-10-30T13:05:00.000Z",
+  "eventType": "system.api_token.create",
+  "actor": {
+   "alternateId": "eve@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.10"
+  },
+  "target": [
+   {
+    "type": "Token",
+    "displayName": "sync"
+   }
+  ]
+ },
+ {
+  "published": "2026-10-30T13:06:00.000Z",
+  "eventType": "system.api_token.create",
+  "actor": {
+   "alternateId": "okta-system",
+   "type": "SystemPrincipal"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.10"
+  },
+  "target": [
+   {
+    "type": "Token",
+    "displayName": "svc"
+   }
+  ]
+ },
+ {
+  "published": "2026-10-30T13:10:00.000Z",
+  "eventType": "group.user_membership.add",
+  "actor": {
+   "alternateId": "eve@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.10"
+  },
+  "target": [
+   {
+    "type": "User",
+    "alternateId": "mallory@example.com"
+   },
+   {
+    "type": "UserGroup",
+    "displayName": "Super Admins"
+   }
+  ]
+ },
+ {
+  "published": "2026-10-30T13:11:00.000Z",
+  "eventType": "group.user_membership.add",
+  "actor": {
+   "alternateId": "eve@example.com",
+   "type": "User"
+  },
+  "outcome": {
+   "result": "SUCCESS"
+  },
+  "client": {
+   "ipAddress": "198.51.100.10"
+  },
+  "target": [
+   {
+    "type": "User",
+    "alternateId": "frank@example.com"
+   },
+   {
+    "type": "UserGroup",
+    "displayName": "Marketing"
+   }
+  ]
+ }
+]

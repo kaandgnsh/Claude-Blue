@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-automation-automated-containment-guardrails
+description: "Should load automated-containment-guardrails from the blue-team-automation plugin."
+tags: [automation, should-trigger]
+execution:
+  prompt: "Management wants the EDR to isolate hosts automatically when ransomware behaviour is detected, without waiting for an analyst. What guardrails should we put in place?"
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-automated-containment-guardrails
+    tool: Skill
+    input_match: ":(automated-containment-guardrails)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(exclusion|cap|tier)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."

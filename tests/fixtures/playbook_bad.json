@@ -1,0 +1,12 @@
+{
+  "name": "auto-contain",
+  "start": "lookup",
+  "steps": {
+    "lookup": {"type": "enrich", "next": "check", "params": {"headers": {"token": "sk-live-123456"}}},
+    "check": {"type": "decision", "branches": {"bad": "isolate", "retry": "poll"}},
+    "poll": {"type": "wait", "next": "lookup"},
+    "isolate": {"type": "action", "action": "edr_isolate_host", "timeout_s": 60, "next": "ghost"},
+    "orphan": {"type": "notify", "next": "end"},
+    "end": {"type": "end"}
+  }
+}
