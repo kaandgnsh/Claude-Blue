@@ -1,0 +1,125 @@
+{
+  "_comment": "Source of truth for skill-trigger evals. Run `python3 tools/claude_blue.py evals` to regenerate evals/<case>/case.yaml. Each positive case names the skill that should fire and the profile (tag) whose plugin contains it; negative cases must not invoke any Claude-Blue skill. `also` lists other skills that are an equally correct choice for the prompt.",
+  "positive": [
+    {
+      "profile": "soc",
+      "skill": "alert-triage",
+      "prompt": "An EDR alert says 'Suspicious PowerShell download cradle' on host FIN-WS-044 for user j.martin at 09:12 UTC. Walk me through triaging it: what do I check first, and how do I decide true vs. false positive?",
+      "expect": "(true positive|false positive|benign)",
+      "also": [
+        "edr-alert-investigation"
+      ]
+    },
+    {
+      "profile": "soc",
+      "skill": "phishing-triage",
+      "prompt": "A user reported an email asking them to re-validate their Microsoft 365 password via a link. How should the SOC triage this report and decide on purge and block actions?",
+      "expect": "(purge|header|sender|url)",
+      "also": [
+        "email-header-analysis"
+      ]
+    },
+    {
+      "profile": "dfir",
+      "skill": "timeline-analysis",
+      "prompt": "I have EDR process events as CSV and CloudTrail JSON for the same incident. Help me merge them into a single UTC timeline so I can see the order of events.",
+      "expect": "(utc|timeline)"
+    },
+    {
+      "profile": "detection",
+      "skill": "detection-testing",
+      "prompt": "We wrote a new Sigma rule for LSASS memory access. How do we test it with Atomic Red Team and recorded datasets before enabling it in production?",
+      "expect": "(atomic|T1003)",
+      "also": [
+        "detection-validation"
+      ]
+    },
+    {
+      "profile": "cloud",
+      "skill": "aws-credential-compromise",
+      "prompt": "GitHub secret scanning told us an AWS access key AKIA... was pushed to a public repo an hour ago. What do we do right now and how do we scope what the key did?",
+      "expect": "(cloudtrail|deactivate|rotate)",
+      "also": [
+        "cloudtrail-investigation"
+      ]
+    },
+    {
+      "profile": "identity",
+      "skill": "mfa-fatigue-detection",
+      "prompt": "One of our users got around 30 Okta Verify push notifications overnight and approved one by accident. How do we detect this pattern and respond?",
+      "expect": "(push|number matching|session)",
+      "also": [
+        "account-compromise-investigation",
+        "okta-log-investigation"
+      ]
+    },
+    {
+      "profile": "appsec",
+      "skill": "github-actions-hardening",
+      "prompt": "Review our GitHub Actions setup: we use pull_request_target to run tests on forks and our actions are referenced by tags like @v4. Is this safe?",
+      "expect": "(pull_request_target|sha|pin)"
+    },
+    {
+      "profile": "grc",
+      "skill": "risk-register",
+      "prompt": "Our auditors want a proper information security risk register. Help me set one up with likelihood, impact, owners and treatment decisions.",
+      "expect": "(owner|treatment|likelihood)"
+    },
+    {
+      "profile": "automation",
+      "skill": "soar-playbook-design",
+      "prompt": "Design a SOAR playbook for reported phishing emails that enriches the URLs, decides a verdict and purges the message from all mailboxes. I want it to fail safely.",
+      "expect": "(approval|rollback|kill switch)"
+    },
+    {
+      "profile": "automation",
+      "skill": "automated-containment-guardrails",
+      "prompt": "Management wants the EDR to isolate hosts automatically when ransomware behaviour is detected, without waiting for an analyst. What guardrails should we put in place?",
+      "expect": "(exclusion|cap|tier)"
+    },
+    {
+      "profile": "purple",
+      "skill": "purple-team-exercise",
+      "prompt": "Our SOC wants to run a two-day purple team exercise with our internal red team to check whether we detect credential access and lateral movement on Windows. Help me plan it: objectives, procedure list, roles and how we record results.",
+      "expect": "(procedure|telemetry|backlog)"
+    },
+    {
+      "profile": "purple",
+      "skill": "detection-validation",
+      "prompt": "We ran 30 Atomic Red Team tests yesterday and exported all alerts from Sentinel. How do I work out which tests were detected, which were missed and how fast the alerts came?",
+      "expect": "(missed|latency|detected)",
+      "also": [
+        "detection-testing"
+      ]
+    },
+    {
+      "profile": "engineering",
+      "skill": "host-firewall-build",
+      "prompt": "Build me an nftables host firewall for an Ubuntu web server that only allows SSH from our admin subnet and HTTPS from anywhere, and make sure I can't lock myself out when applying it.",
+      "expect": "(nft|rollback|ssh)"
+    },
+    {
+      "profile": "engineering",
+      "skill": "ssh-hardening-build",
+      "prompt": "Give me a hardened sshd configuration for our Linux servers with modern key exchange algorithms, and tell me how to test that weak clients are rejected.",
+      "expect": "(kex|sshd|ciphers)"
+    }
+  ],
+  "negative": [
+    {
+      "profile": "soc",
+      "name": "no-trigger-python-refactor",
+      "prompt": "Refactor this Python function to use a list comprehension: def evens(xs):\n    out = []\n    for x in xs:\n        if x % 2 == 0:\n            out.append(x)\n    return out"
+    },
+    {
+      "profile": "cloud",
+      "name": "no-trigger-recipe",
+      "prompt": "Give me a simple recipe for a vegetarian lasagna for four people."
+    },
+    {
+      "profile": "engineering",
+      "name": "no-trigger-css",
+      "prompt": "How do I center a div horizontally and vertically with CSS flexbox?"
+    }
+  ]
+}

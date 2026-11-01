@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-engineering-host-firewall-build
+description: "Should load host-firewall-build from the blue-team-engineering plugin."
+tags: [engineering, should-trigger]
+execution:
+  prompt: "Build me an nftables host firewall for an Ubuntu web server that only allows SSH from our admin subnet and HTTPS from anywhere, and make sure I can't lock myself out when applying it."
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-host-firewall-build
+    tool: Skill
+    input_match: ":(host-firewall-build)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(nft|rollback|ssh)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."

@@ -1,0 +1,10 @@
+[
+  {"id": "PT-01", "technique": "T1003.001", "host": "WS-12", "executed_at": "2026-10-30T10:00:00Z",
+   "expect": ["LSASS Memory Access"], "window_min": 30},
+  {"id": "PT-02", "technique": "T1059.001", "host": "WS-12", "executed_at": "2026-10-30T10:40:00Z",
+   "expect": ["Encoded PowerShell Command"], "window_min": 30},
+  {"id": "PT-03", "technique": "T1053.005", "host": "SRV-03", "executed_at": "2026-10-30T11:00:00Z",
+   "expect": ["Scheduled Task Created Remotely"], "window_min": 60},
+  {"id": "PT-04", "technique": "T1547.001", "host": "WS-12", "executed_at": "2026-10-30T12:00:00Z",
+   "expect": ["Run Key Persistence"], "window_min": 15}
+]

@@ -4,8 +4,8 @@ description: Investigate and hunt with Zeek logs — conn, dns, http, ssl, x509,
 license: MIT
 metadata:
   category: network-security
-  version: "2.0.0"
-  verification: documented
+  version: "2.2.0"
+  verification: tested
 ---
 
 # Zeek Log Analysis
@@ -15,6 +15,14 @@ metadata:
 ```sh
 zeek -C -r capture.pcap LogAscii::use_json=T local   # -C ignores checksum errors; JSON output
 ```
+
+## First-pass triage script
+
+```sh
+python3 scripts/zeek_triage.py /opt/zeek/logs/current/*.log --dc 10.0.0.10 --dc 10.0.0.11 > findings.json
+```
+
+Reads TSV or JSON logs (also `.gz`) and reports long connections, large uploads to external addresses, scan-like sources (S0/REJ to many hosts), DNS labels that look like tunnelling, rare user agents, invalid certificates, executable transfers, remote service creation over `svcctl` and DRSUAPI replication from hosts not passed as `--dc`. Thresholds: `--long-seconds`, `--upload-bytes`, `--scan-hosts`, `--rare`. Treat output as leads; confirm each with the queries below.
 
 ## Key logs
 

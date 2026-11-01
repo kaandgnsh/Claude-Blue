@@ -4,7 +4,7 @@ description: Define verifiable application security requirements using OWASP ASV
 license: MIT
 metadata:
   category: appsec
-  version: "2.0.0"
+  version: "2.2.0"
   verification: documented
 ---
 
@@ -19,6 +19,8 @@ metadata:
 | L3 | High-value apps: critical infrastructure, healthcare, finance, high-assurance identity |
 
 ASVS 5.0 (released 2025) reorganized chapters (e.g., encoding and sanitization, validation and business logic, web frontend security, API and web service, file handling, authentication, session management, authorization, self-contained tokens, OAuth/OIDC, cryptography, secure communication, configuration, data protection, logging and error handling). Requirement IDs changed from 4.0.3 — cite the version.
+
+For all 17 chapters with example acceptance criteria and verification methods, and mappings to the OWASP Top 10:2025, API Security Top 10 2023 and LLM Top 10 2025, read [references/owasp-mappings.md](references/owasp-mappings.md).
 
 ## Workflow
 

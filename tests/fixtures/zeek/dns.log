@@ -1,0 +1,3 @@
+{"ts": 1761818800.0, "uid": "D1", "id.orig_h": "10.0.0.5", "id.resp_h": "10.0.0.2", "query": "www.example.com"}
+{"ts": 1761818801.0, "uid": "D2", "id.orig_h": "10.0.0.7", "id.resp_h": "10.0.0.2", "query": "a9f3k2l0qz8x7v6b5n4m3p2o1i8u7y6t5r4e3w2q1zz9x8c7.t.evil.example"}
+{"ts": 1761818802.0, "uid": "D3", "id.orig_h": "10.0.0.7", "id.resp_h": "10.0.0.2", "query": "x7Kp2QmZ9vL4tR8wN3bY6cJ.t.evil.example"}

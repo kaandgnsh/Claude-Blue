@@ -116,6 +116,26 @@ class Installer(unittest.TestCase):
             manifest = json.loads((target / cb.MANIFEST_NAME).read_text())
             self.assertEqual(list(manifest["skills"]), ["evidence-intake"])
 
+    def test_bytecode_caches_neither_ship_nor_count_as_modification(self):
+        source_cache = ROOT / "skills/dfir/timeline-analysis/scripts/__pycache__"
+        created = not source_cache.exists()
+        source_cache.mkdir(exist_ok=True)
+        (source_cache / "probe.cpython-399.pyc").write_bytes(b"x")
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                target = Path(tmp) / "skills"
+                self.cli("install", "--target", str(target), "--skill", "timeline-analysis")
+                installed = target / "timeline-analysis" / "scripts"
+                self.assertFalse((installed / "__pycache__").exists())
+                (installed / "__pycache__").mkdir()
+                (installed / "__pycache__" / "merge_timeline.cpython-314.pyc").write_bytes(b"y")
+                self.cli("uninstall", "--target", str(target))
+                self.assertFalse((target / "timeline-analysis").exists())
+        finally:
+            (source_cache / "probe.cpython-399.pyc").unlink()
+            if created:
+                source_cache.rmdir()
+
     def test_upgrade_replaces_unmodified_outdated_skill(self):
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "skills"
@@ -164,3 +184,92 @@ class Installer(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def load_tool(name):
+    tool_spec = importlib.util.spec_from_file_location(name, ROOT / "tools" / f"{name}.py")
+    module = importlib.util.module_from_spec(tool_spec)
+    tool_spec.loader.exec_module(module)
+    return module
+
+
+class AttackRefresh(unittest.TestCase):
+    def bundle(self):
+        def technique(tid, name, tactic, **extra):
+            return {"type": "attack-pattern", "name": name, "kill_chain_phases": [
+                {"kill_chain_name": "mitre-attack", "phase_name": tactic}],
+                "external_references": [{"source_name": "mitre-attack", "external_id": tid}], **extra}
+        return {"objects": [
+            {"type": "x-mitre-collection", "x_mitre_version": "21.0"},
+            {"type": "x-mitre-tactic", "x_mitre_shortname": "credential-access"},
+            {"type": "x-mitre-tactic", "x_mitre_shortname": "old-tactic", "x_mitre_deprecated": True},
+            technique("T1003", "OS Credential Dumping", "credential-access"),
+            technique("T1003.001", "LSASS Memory", "credential-access"),
+            technique("T9999", "Gone", "credential-access", revoked=True),
+            technique("T9998", "Old", "credential-access", x_mitre_deprecated=True),
+            {"type": "attack-pattern", "name": "No id", "external_references": [{"source_name": "capec"}]},
+        ]}
+
+    def test_build_keeps_only_active_objects(self):
+        snap = load_tool("refresh_attack").build(self.bundle(), "test")
+        self.assertEqual(snap["attack_version"], "21.0")
+        self.assertEqual(snap["tactics"], ["credential-access"])
+        self.assertEqual(list(snap["techniques"]), ["T1003", "T1003.001"])
+        self.assertEqual(snap["technique_tactics"]["T1003.001"], ["credential-access"])
+
+    def test_cli_check_and_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle, out = Path(tmp) / "b.json", Path(tmp) / "snap.json"
+            bundle.write_text(json.dumps(self.bundle()))
+            cmd = [sys.executable, str(ROOT / "tools/refresh_attack.py"), "--input", str(bundle), "--output", str(out)]
+            self.assertEqual(subprocess.run(cmd + ["--check"], capture_output=True).returncode, 1)
+            self.assertEqual(subprocess.run(cmd, capture_output=True).returncode, 0)
+            self.assertEqual(subprocess.run(cmd + ["--check"], capture_output=True).returncode, 0)
+
+    def test_bundled_snapshot_is_well_formed(self):
+        snap = json.loads((ROOT / "tools/data/attack-enterprise.json").read_text())
+        self.assertEqual(set(snap), {"source", "attack_version", "tactics", "techniques", "technique_tactics"})
+        self.assertEqual(set(snap["techniques"]), set(snap["technique_tactics"]))
+
+
+class LinkCheck(unittest.TestCase):
+    def test_extract_skips_code_and_placeholders(self):
+        links = load_tool("check_links")
+        with tempfile.TemporaryDirectory() as tmp:
+            md = Path(tmp) / "a.md"
+            md.write_text("See https://docs.example.org/x and https://real.test/page.\n"
+                          "Inline `https://code.test/skip` and <https://angle.test/a>\n"
+                          "```sh\ncurl https://fenced.test/skip\n```\n| https://table.test/t |\n")
+            urls = set(links.extract([md]))
+        self.assertEqual(urls, {"https://real.test/page", "https://angle.test/a", "https://table.test/t"})
+
+    def test_probe_classifies_ok_broken_and_blocked(self):
+        import http.server
+        import threading
+
+        class Handler(http.server.BaseHTTPRequestHandler):
+            def do_HEAD(self):
+                code = {"/ok": 200, "/gone": 404, "/forbidden": 403, "/nohead": 405}.get(self.path, 404)
+                self.send_response(code)
+                self.end_headers()
+
+            def do_GET(self):
+                code = {"/ok": 200, "/gone": 404, "/forbidden": 403, "/nohead": 200}.get(self.path, 404)
+                self.send_response(code)
+                self.end_headers()
+
+            def log_message(self, *args):
+                pass
+
+        server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        base = f"http://127.0.0.1:{server.server_address[1]}"
+        links = load_tool("check_links")
+        try:
+            self.assertEqual(links.probe(base + "/ok", 5)[0], "ok")
+            self.assertEqual(links.probe(base + "/nohead", 5)[0], "ok")
+            self.assertEqual(links.probe(base + "/gone", 5)[0], "broken")
+            self.assertEqual(links.probe(base + "/forbidden", 5)[0], "blocked")
+        finally:
+            server.shutdown()
+            server.server_close()

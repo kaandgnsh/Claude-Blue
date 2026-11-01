@@ -1,0 +1,20 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: no-trigger-python-refactor-soc
+description: "Unrelated request: no Claude-Blue skill from blue-team-soc should load."
+tags: [soc, should-not-trigger]
+execution:
+  prompt: "Refactor this Python function to use a list comprehension: def evens(xs):\n    out = []\n    for x in xs:\n        if x % 2 == 0:\n            out.append(x)\n    return out"
+  max_turns: 4
+  timeout_seconds: 180
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: no-skill-loaded
+    tool: Skill
+    min: 0
+    max: 0
+  - type: llm
+    name: answers-the-actual-question
+    criteria: "The answer addresses the user's request directly and does not bring in unrelated cybersecurity procedures."

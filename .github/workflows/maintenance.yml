@@ -1,0 +1,61 @@
+name: maintenance
+# Weekly network checks. Informational: they never block merges, they report in the job summary.
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Check cited URLs
+        run: |
+          set +e
+          python tools/check_links.py > links.txt
+          status=$?
+          {
+            echo "## Link check"
+            echo
+            echo '```'
+            cat links.txt
+            echo '```'
+            echo "Blocked entries (403/429/timeouts) are usually sites refusing automated clients; check them by hand."
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status
+  attack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Compare the ATT&CK snapshot with MITRE attack-stix-data
+        run: |
+          set +e
+          python tools/refresh_attack.py > attack.txt
+          python tools/claude_blue.py validate > validate.txt
+          status=$?
+          {
+            echo "## ATT&CK snapshot"
+            echo
+            echo '```'
+            cat attack.txt
+            echo '```'
+            echo "### validate against the refreshed snapshot"
+            echo '```'
+            cat validate.txt
+            echo '```'
+            echo "If the version changed: run tools/refresh_attack.py locally, fix the IDs validate reports, and commit tools/data/attack-enterprise.json."
+          } >> "$GITHUB_STEP_SUMMARY"
+          git diff --quiet -- tools/data/attack-enterprise.json || echo "::warning::ATT&CK snapshot is behind upstream"
+          exit $status

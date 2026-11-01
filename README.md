@@ -1,12 +1,12 @@
 # Claude-Blue
 
 <p align="center">
-  <strong>A defensive cybersecurity skill library for Claude Code: 262 task-specific skills for SOC, DFIR, detection engineering, security engineering, cloud, identity, AppSec, GRC, OT and AI security.</strong>
+  <strong>A defensive cybersecurity skill library for Claude Code: 274 task-specific skills for SOC, DFIR, detection engineering, security engineering, security automation and testing, cloud, identity, AppSec, GRC, OT and AI security.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Skills-262-1F6FEB?style=for-the-badge" alt="262 skills">
-  <img src="https://img.shields.io/badge/Categories-50-444444?style=for-the-badge" alt="50 categories">
+  <img src="https://img.shields.io/badge/Skills-274-1F6FEB?style=for-the-badge" alt="274 skills">
+  <img src="https://img.shields.io/badge/Categories-52-444444?style=for-the-badge" alt="52 categories">
   <img src="https://img.shields.io/badge/Claude%20Code-Plugin%20%2B%20Skills-D97757?style=for-the-badge" alt="Claude Code plugin and skills">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/License-MIT-315C45?style=for-the-badge" alt="MIT license">
@@ -51,17 +51,19 @@ Skills are written in the [Agent Skills](https://agentskills.io/specification) f
 
 ## Features
 
-- **262 independent skills in 50 categories**, each with its own scope and procedure. A validator rejects repeated boilerplate.
+- **274 independent skills in 52 categories**, each with its own scope and procedure. A validator rejects repeated boilerplate.
 - **Builds controls, not just reviews.** The `security-engineering` category produces deployable blue-team artifacts:
   - an nftables host firewall generated from a policy and tested with real traffic in isolated network namespaces, with an auto-rollback apply that prevents lockout;
   - a hardened SSH configuration with post-quantum KEX, live-tested against weak clients;
   - a secure scaffold for blue-team tools;
   - cloud firewalls as code, a TLS reverse proxy, IDS deployment, log shipping and Ansible hardening automation.
-- **Tested where it counts.** 16 skills are marked `tested`. Their bundled standard-library scripts and their embedded Sigma, YARA and tshark examples run in CI. The rest are clearly labelled `documented`.
-- **Bundled scripts:** timeline merging, beacon scoring, `.eml` header analysis, IOC extraction, GitHub Actions auditing, Kubernetes RBAC auditing, CloudTrail summarizing, IAM policy linting and password-spray detection.
+- **Tested where it counts.** 22 skills are marked `tested`. Their bundled standard-library scripts, their embedded Sigma, YARA and tshark examples, and the osquery query library (run inside an osquery container against a planted scenario) execute in CI. The rest are clearly labelled `documented`.
+- **Automation and testing.** `security-automation` designs, lints, tests and measures SOAR playbooks and automatic containment guardrails; `security-testing` plans purple-team exercises and security tests, runs emulation safely, validates controls and scores detection coverage from exported alerts.
+- **Bundled scripts:** timeline merging, beacon scoring, `.eml` header analysis, IOC extraction, GitHub Actions auditing, Kubernetes RBAC auditing, CloudTrail summarizing, IAM policy linting, password-spray detection, Zeek log triage, Okta System Log hunts, Entra ID sign-in review, osquery baseline diffs, SOAR playbook linting and emulation coverage scoring.
 - **Current frameworks.** ATT&CK IDs are validated against ATT&CK **v20**. Skills also align with NIST SP 800-61r3, CSF 2.0, OWASP ASVS 5.0, the OWASP API Top 10 (2023) and the OWASP LLM Top 10 (2025).
-- **Role-based profiles** (`soc`, `dfir`, `detection`, `cloud`, `identity`, `appsec`, `grc`, `ot`, `ai`, …) keep installs within Claude Code's skill-listing context budget.
+- **Role-based profiles** (`soc`, `dfir`, `detection`, `cloud`, `identity`, `appsec`, `grc`, `ot`, `ai`, `automation`, `purple`, …) keep installs within Claude Code's skill-listing context budget.
 - **Native Claude Code plugins.** The repository is a plugin marketplace with one plugin per profile.
+- **Trigger evals.** `evals/` holds should-trigger and should-not-trigger cases per profile for `claude plugin eval`, generated from one `evals/cases.json`.
 - **Safe installer:**
   - never overwrites skills it didn't install;
   - verifies copies with SHA-256;
@@ -83,6 +85,7 @@ Skills are written in the [Agent Skills](https://agentskills.io/specification) f
 | **Data & privacy** | `data-security` · `privacy-engineering` · `database-security` |
 | **Risk & resilience** | `security-governance` · `compliance-audit` · `third-party-risk` · `security-metrics` · `business-continuity` · `security-architecture` · `asset-attack-surface` · `vulnerability-management` · `security-research` · `security-awareness` |
 | **Security engineering** | `security-engineering` (firewall, SSH, TLS proxy, IDS, log shipping, hardening automation, cloud firewall, tool development) |
+| **Automation & testing** | `security-automation` (SOAR playbook design and testing, containment guardrails, enrichment, automation risk and metrics) · `security-testing` (purple team, detection validation, control validation, test planning, simulation safety, BAS review) |
 | **Specialized** | `ai-security` · `ot-ics-security` |
 
 The full index with every skill and its description is in **[CATALOG.md](CATALOG.md)**.
@@ -116,6 +119,8 @@ One-step install lines for each plugin:
 /plugin install blue-team-appsec --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-platform --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-engineering --marketplace kaandgnsh/Claude-Blue
+/plugin install blue-team-automation --marketplace kaandgnsh/Claude-Blue
+/plugin install blue-team-purple --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-grc --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-ot --marketplace kaandgnsh/Claude-Blue
 /plugin install blue-team-ai --marketplace kaandgnsh/Claude-Blue
@@ -137,7 +142,7 @@ python3 tools/claude_blue.py uninstall                              # remove onl
 ```
 
 > [!TIP]
-> Prefer a profile over `--all`. Claude Code always lists skill names, but it drops descriptions once the listing exceeds its context budget. 262 descriptions exceed that budget, which makes automatic triggering less reliable. See [docs/INSTALL.md](docs/INSTALL.md) for details.
+> Prefer a profile over `--all`. Claude Code always lists skill names, but it drops descriptions once the listing exceeds its context budget. 274 descriptions exceed that budget, which makes automatic triggering less reliable. See [docs/INSTALL.md](docs/INSTALL.md) for details.
 
 ## Usage
 
@@ -167,8 +172,11 @@ python3 skills/devsecops/github-actions-hardening/scripts/gha_audit.py .github/w
 
 | Check | Result |
 |---|---|
-| Catalog validator (`tools/claude_blue.py validate`) | 0 errors across 262 skills |
-| Unit tests (`python3 -m unittest discover -s tests`) | 49 / 49 passing |
+| Catalog validator (`tools/claude_blue.py validate`) | 0 errors across 274 skills |
+| Unit tests (`python3 -m unittest discover -s tests`) | 75 passing (3 skipped locally without YARA/Sigma; CI installs them) |
+| osquery query library | Every Linux query runs in osquery 5.17 and finds the planted implant, `/dev/shm` process, SSH key, cron entry and web shell |
+| Cited URLs (`tools/check_links.py`) | 757 checked, 0 broken (59 refuse automated clients) |
+| Skill-trigger evals (`claude plugin eval`) | Expected skill fired in the soc, automation and purple smoke runs |
 | Generated firewall (real traffic in network namespaces) | Every probe matches the policy; an overly permissive ruleset is caught |
 | Generated sshd config (live server) | Key login works; passwords, CBC, SHA-1 KEX/MAC and forwarding refused |
 | Embedded Sigma rules | `sigma check` with 0 errors and 0 issues; converts to Splunk SPL |
@@ -182,6 +190,8 @@ The validator checks for:
 - "Use when" trigger descriptions;
 - existing related skills, links and scripts;
 - valid ATT&CK v20 technique IDs;
+- `references/` files that SKILL.md actually points to;
+- eval cases that name existing skills inside the right profile;
 - size limits;
 - copy-pasted boilerplate;
 - a stale catalog.
@@ -192,10 +202,21 @@ The validator checks for:
 
 ```bash
 python3 tools/claude_blue.py validate        # quality gates
-python3 tools/claude_blue.py catalog         # regenerate catalog.json, CATALOG.md and the marketplace
+python3 tools/claude_blue.py catalog         # regenerate catalog.json, CATALOG.md, the marketplace and evals/
 python3 -m unittest discover -s tests -v     # tests (optional tools are skipped with a reason)
 claude plugin validate .                     # Claude Code's own validation
+python3 tools/check_links.py                 # check cited URLs (network)
+python3 tools/refresh_attack.py --check      # is the ATT&CK snapshot current? (network)
 ```
+
+Skill-trigger evals run per profile against a standalone plugin build:
+
+```bash
+python3 tools/claude_blue.py eval-plugin soc /tmp/blue-team-soc
+claude plugin eval /tmp/blue-team-soc --no-publish --runs 1 --max-cost-usd 2
+```
+
+Add cases to `evals/cases.json` (skill, profile, prompt, a regex the answer should match, and optional equally-correct `also` skills), then run `catalog`.
 
 To add a skill, create `skills/<category>/<skill-name>/SKILL.md` following an existing one, then run `catalog` and `validate`. Mark it `tested` only when a bundled script or a test exercises it.
 
@@ -204,7 +225,10 @@ To add a skill, create `skills/<category>/<skill-name>/SKILL.md` following an ex
 ```text
 skills/<category>/<skill>/SKILL.md     one task per skill
 skills/<category>/<skill>/scripts/     optional stdlib helper scripts
-tools/claude_blue.py                   validate · catalog · list · install · uninstall
+skills/<category>/<skill>/references/  optional detail loaded on demand (event IDs, error codes, mappings)
+evals/cases.json                       skill-trigger eval source; evals/*/case.yaml are generated
+tools/claude_blue.py                   validate · catalog · eval-plugin · list · install · uninstall
+tools/check_links.py                   URL checker · tools/refresh_attack.py ATT&CK snapshot refresh
 tools/profiles.json                    role-based install profiles
 tools/data/attack-enterprise.json      ATT&CK v20 snapshot for ID validation
 .claude-plugin/marketplace.json        generated Claude Code plugin marketplace

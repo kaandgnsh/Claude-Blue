@@ -4,8 +4,8 @@ description: Investigate Okta System Log events — authentication and MFA outco
 license: MIT
 metadata:
   category: saas-security
-  version: "2.0.0"
-  verification: documented
+  version: "2.2.0"
+  verification: tested
 ---
 
 # Okta System Log Investigation
@@ -37,6 +37,14 @@ Use pagination (`Link: rel="next"`). Store tokens in a vault; use a read-only ad
 - New IdP created or routing rules changed (`policy.rule.update` on IdP discovery).
 - API token creation by humans; admin role grants outside change windows.
 - Same session ID (`authenticationContext.externalSessionId`) used from multiple IPs/ASNs (session hijack).
+
+## Run the hunts on an export
+
+```sh
+python3 scripts/okta_hunts.py alice.json --reset-hours 24 --push-count 5 --push-minutes 10 > okta_findings.json
+```
+
+Accepts the API's JSON array (concatenate pages with `jq -s 'add'`) or JSON lines. Reports `factor-reset-then-new-ip`, `push-fatigue` (many pushes or denies, then an MFA success), `session-multi-ip` (one `externalSessionId` across ASNs), `rogue-idp`, `human-api-token` and `admin-grant`. Each finding carries the event time, user, IP and event type so you can pivot back into the System Log.
 
 ## Response
 

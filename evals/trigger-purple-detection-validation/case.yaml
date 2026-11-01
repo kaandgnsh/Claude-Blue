@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-purple-detection-validation
+description: "Should load detection-validation from the blue-team-purple plugin."
+tags: [purple, should-trigger]
+execution:
+  prompt: "We ran 30 Atomic Red Team tests yesterday and exported all alerts from Sentinel. How do I work out which tests were detected, which were missed and how fast the alerts came?"
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-detection-validation
+    tool: Skill
+    input_match: ":(detection-validation|detection-testing)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(missed|latency|detected)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."

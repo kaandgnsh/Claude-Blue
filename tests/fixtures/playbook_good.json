@@ -1,0 +1,19 @@
+{
+  "name": "phish-reported-email",
+  "owner": "soc-automation",
+  "kill_switch": "Disable Logic App pb-phish",
+  "start": "parse",
+  "steps": {
+    "parse": {"type": "query", "timeout_s": 60, "next": "enrich"},
+    "enrich": {"type": "enrich", "timeout_s": 120, "on_error": "manual", "next": "verdict",
+               "params": {"api_key": "vault:soc/vt-api-key"}},
+    "verdict": {"type": "decision", "branches": {"malicious": "purge", "benign": "close"}, "default": "manual"},
+    "purge": {"type": "action", "action": "purge_message", "destructive": true, "approval": "soc-l2",
+              "rollback": "restore_message", "idempotency_key": "{{message_id}}", "timeout_s": 300,
+              "on_error": "manual", "next": "notify"},
+    "notify": {"type": "notify", "next": "end"},
+    "manual": {"type": "notify", "next": "end"},
+    "close": {"type": "notify", "next": "end"},
+    "end": {"type": "end"}
+  }
+}

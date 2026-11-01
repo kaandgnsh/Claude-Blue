@@ -11,7 +11,7 @@ The repository is a plugin marketplace (`.claude-plugin/marketplace.json`). Each
 /plugin install blue-team-soc@claude-blue-marketplace
 ```
 
-Plugins: `blue-team-ai`, `blue-team-appsec`, `blue-team-cloud`, `blue-team-detection`, `blue-team-dfir`, `blue-team-engineering`, `blue-team-grc`, `blue-team-hunting`, `blue-team-identity`, `blue-team-ot`, `blue-team-platform`, `blue-team-soc`, `blue-team-all`. Plugin skills are namespaced, e.g. `/blue-team-soc:alert-triage`. (Plugin names cannot start with `claude-`; Claude Code reserves that prefix.)
+Plugins: `blue-team-ai`, `blue-team-appsec`, `blue-team-automation`, `blue-team-cloud`, `blue-team-detection`, `blue-team-dfir`, `blue-team-engineering`, `blue-team-grc`, `blue-team-hunting`, `blue-team-identity`, `blue-team-ot`, `blue-team-platform`, `blue-team-purple`, `blue-team-soc`, `blue-team-all`. Plugin skills are namespaced, e.g. `/blue-team-soc:alert-triage`. (Plugin names cannot start with `claude-`; Claude Code reserves that prefix.)
 
 ## Option B — copy skills with the installer
 
@@ -39,4 +39,4 @@ Safety properties (all covered by `tests/test_tooling.py`):
 
 ## Context budget
 
-Claude Code always lists skill names, but it drops descriptions once the listing exceeds its budget (about 1% of the context window). Install a role profile rather than all 262 skills at user level. Alternatively, raise `skillListingBudgetFraction` or use `skillOverrides` to list low-priority skills name-only.
+Claude Code always lists skill names, but it drops descriptions once the listing exceeds its budget (about 1% of the context window). Install a role profile rather than all 274 skills at user level. Alternatively, raise `skillListingBudgetFraction` or use `skillOverrides` to list low-priority skills name-only.

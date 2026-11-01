@@ -1,0 +1,7 @@
+timestamp,rule,host
+2026-10-30T10:04:10Z,LSASS Memory Access,ws-12.corp.example
+2026-10-30 10:41:00,Suspicious PowerShell Download,WS-12
+1793359200000,Scheduled Task Created Remotely,SRV-03
+2026-10-30T12:30:00Z,Run Key Persistence,WS-12
+2026-10-30T10:05:00Z,LSASS Memory Access,WS-99
+not-a-time,Broken Row,WS-12

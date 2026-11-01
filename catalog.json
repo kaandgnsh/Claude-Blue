@@ -1,9 +1,9 @@
 {
   "project": "Claude-Blue",
-  "version": "2.0.0",
-  "skill_count": 262,
-  "category_count": 50,
-  "tested_skill_count": 16,
+  "version": "2.2.0",
+  "skill_count": 274,
+  "category_count": 52,
+  "tested_skill_count": 22,
   "categories": [
     {
       "id": "active-directory-security",
@@ -204,7 +204,7 @@
           "title": "Security Requirements (ASVS)",
           "description": "Define verifiable application security requirements using OWASP ASVS 5.0 levels (and MASVS for mobile), mapped to the application's risk, and turn them into acceptance criteria, tests and review checklists. Use when starting a project, writing security acceptance criteria for features, selecting an assurance level, or auditing an application against ASVS.",
           "verification": "documented",
-          "version": "2.0.0",
+          "version": "2.2.0",
           "path": "skills/appsec/security-requirements"
         },
         {
@@ -346,8 +346,8 @@
           "name": "entra-signin-investigation",
           "title": "Entra ID Sign-in Investigation",
           "description": "Investigate Microsoft Entra ID sign-ins \u2014 interactive and non-interactive logs, ResultType error codes, Conditional Access results, authentication details (MFA method), device and location, token-replay and AiTM indicators, risky sign-ins (Identity Protection) \u2014 with KQL and Graph. Use when a user account may be compromised, a risky sign-in alert fires, or sign-in anomalies need explaining.",
-          "verification": "documented",
-          "version": "2.0.0",
+          "verification": "tested",
+          "version": "2.2.0",
           "path": "skills/azure-security/entra-signin-investigation"
         }
       ]
@@ -923,8 +923,8 @@
           "name": "osquery-investigation",
           "title": "osquery Investigation",
           "description": "Investigate and sweep endpoints with osquery SQL (osqueryi, Fleet, Kolide) \u2014 processes without binaries on disk, listening ports, persistence, users, kernel modules, file hashes \u2014 across Windows, macOS and Linux. Use when you need fast cross-platform endpoint answers, fleet-wide IOC sweeps, or scheduled detection queries.",
-          "verification": "documented",
-          "version": "2.0.0",
+          "verification": "tested",
+          "version": "2.2.0",
           "path": "skills/endpoint-security/osquery-investigation"
         }
       ]
@@ -1429,8 +1429,8 @@
           "name": "zeek-log-analysis",
           "title": "Zeek Log Analysis",
           "description": "Investigate and hunt with Zeek logs \u2014 conn, dns, http, ssl, x509, files, notice, smb, dce_rpc, kerberos \u2014 using zeek-cut, jq (JSON logs) or SIEM queries to find C2, lateral movement, exfiltration and anomalies. Use when Zeek/Corelight data is available or when processing a PCAP with Zeek.",
-          "verification": "documented",
-          "version": "2.0.0",
+          "verification": "tested",
+          "version": "2.2.0",
           "path": "skills/network-security/zeek-log-analysis"
         }
       ]
@@ -1556,8 +1556,8 @@
           "name": "okta-log-investigation",
           "title": "Okta System Log Investigation",
           "description": "Investigate Okta System Log events \u2014 authentication and MFA outcomes, session and token activity, admin and policy changes, factor resets, ThreatInsight detections, IdP/federation changes, support access \u2014 via the System Log API or SIEM. Use when an Okta account or org may be compromised, after help-desk social engineering, or when building Okta detections.",
-          "verification": "documented",
-          "version": "2.0.0",
+          "verification": "tested",
+          "version": "2.2.0",
           "path": "skills/saas-security/okta-log-investigation"
         }
       ]
@@ -1657,6 +1657,59 @@
           "verification": "documented",
           "version": "2.0.0",
           "path": "skills/security-architecture/zero-trust-assessment"
+        }
+      ]
+    },
+    {
+      "id": "security-automation",
+      "skills": [
+        {
+          "name": "automated-containment-guardrails",
+          "title": "Automated Containment Guardrails",
+          "description": "Define when containment may run without a human (auto-isolate a host, disable or revoke sessions for an account, block an IOC) using confidence thresholds, asset and identity tiers, exclusion lists, rate caps, circuit breakers, release paths and after-action review. Use when proposing or reviewing automatic response in EDR, identity protection or SOAR, or when an automatic action hit the wrong target.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-automation/automated-containment-guardrails"
+        },
+        {
+          "name": "automation-metrics",
+          "title": "Automation Metrics",
+          "description": "Measure whether security automation pays off and stays safe, covering run volume, success and failure rates, analyst time saved, decision precision of automatic closes and actions, time-to-containment deltas, and the maintenance cost of each playbook. Use when justifying or prioritizing SOAR work, deciding to retire or promote a playbook, or reporting automation value to SOC leadership.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-automation/automation-metrics"
+        },
+        {
+          "name": "automation-risk-review",
+          "title": "Automation Risk Review",
+          "description": "Review security automation (SOAR playbooks, scripts, bots, AI agents with tool access) for blast radius, credential scope, injection through alert fields, feedback loops, missing audit trails and abuse by an attacker who controls the input. Use when approving a new automation for production, during a periodic automation inventory review, or after automation caused an outage or acted on attacker-controlled data.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-automation/automation-risk-review"
+        },
+        {
+          "name": "enrichment-automation",
+          "title": "Enrichment Automation",
+          "description": "Build automated alert enrichment (asset/CMDB, identity, threat intelligence reputation, geolocation, prior cases, sandbox) with caching, rate-limit handling, data-sharing rules, normalized verdicts and write-back to the case. Use when designing enrichment for a SIEM or SOAR pipeline, when analysts repeat the same lookups on every alert, or when enrichment leaks data to third parties or hits API quotas.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-automation/enrichment-automation"
+        },
+        {
+          "name": "playbook-testing",
+          "title": "Playbook Testing",
+          "description": "Test a SOAR playbook before and after release with replayed incidents, mocked connectors, negative and failure-path cases, a staging tenant and a canary rollout. Use when a new or changed playbook is about to go live, after a connector or API version change, or when an automation misfired and you need a regression test.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-automation/playbook-testing"
+        },
+        {
+          "name": "soar-playbook-design",
+          "title": "SOAR Playbook Design",
+          "description": "Design a SOAR or automation playbook as an explicit step graph with triggers, inputs, enrichment, decisions, approval gates, rollback, timeouts and a kill switch, then lint it with a bundled checker. Use when designing a new SOAR playbook, porting one between platforms (Sentinel Logic Apps, Splunk SOAR, XSOAR, Tines, Torq, Shuffle), or reviewing whether an existing playbook can fail safely.",
+          "verification": "tested",
+          "version": "2.2.0",
+          "path": "skills/security-automation/soar-playbook-design"
         }
       ]
     },
@@ -1858,6 +1911,59 @@
           "verification": "documented",
           "version": "2.0.0",
           "path": "skills/security-research/cve-technical-analysis"
+        }
+      ]
+    },
+    {
+      "id": "security-testing",
+      "skills": [
+        {
+          "name": "attack-simulation-safety",
+          "title": "Attack Simulation Safety",
+          "description": "Run attack simulation tools (Atomic Red Team, MITRE Caldera, Stratus Red Team, BAS agents) without harming production, covering test prerequisites review, isolation of test identities and hosts, alert routing, dependency and side-effect checks, cleanup commands and post-test verification that nothing is left behind. Use when about to execute emulation in a corporate or cloud environment, when reviewing an atomic test before running it, or after a test left artifacts or caused an outage.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-testing/attack-simulation-safety"
+        },
+        {
+          "name": "bas-results-review",
+          "title": "BAS Results Review",
+          "description": "Interpret breach and attack simulation (BAS) results critically, separating prevented, detected and logged-only outcomes, checking that the simulated procedures resemble real threats, validating results against SIEM and EDR evidence, and turning findings into prioritized fixes rather than a score. Use when reviewing a BAS report or dashboard (for example AttackIQ, SafeBreach, Cymulate, Picus), selecting BAS scenarios, or when leadership asks what a BAS score means.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-testing/bas-results-review"
+        },
+        {
+          "name": "control-validation",
+          "title": "Control Validation",
+          "description": "Prove that preventive and detective controls work as configured (EDR blocking, ASR rules, application control, egress filtering, DNS filtering, MFA and conditional access, email attachment filtering, DLP) with safe, repeatable test cases and recorded evidence instead of console screenshots of policy settings. Use when assuring a control after deployment or change, preparing audit evidence of operating effectiveness, or investigating why an incident bypassed a control.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-testing/control-validation"
+        },
+        {
+          "name": "detection-validation",
+          "title": "Detection Validation (campaign scoring)",
+          "description": "Score a whole adversary-emulation or purple-team run against the alerts the SIEM or EDR actually raised, classifying every executed test as detected, detected by an unexpected rule, or missed, with detection latency, using a bundled matcher. Use after an Atomic Red Team, Caldera or manual emulation campaign, after a BAS run, or when reporting which techniques the SOC would really see.",
+          "verification": "tested",
+          "version": "2.2.0",
+          "path": "skills/security-testing/detection-validation"
+        },
+        {
+          "name": "purple-team-exercise",
+          "title": "Purple-Team Exercise",
+          "description": "Plan and run a purple-team exercise where offensive operators and defenders work in the same room on threat-relevant procedures, covering objective and threat selection, procedure list, telemetry checks per step, live tuning, evidence capture and a remediation backlog. Use when organizing a purple-team day or week, turning red-team findings into detections, or validating readiness against a specific threat actor.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-testing/purple-team-exercise"
+        },
+        {
+          "name": "security-test-planning",
+          "title": "Security Test Planning",
+          "description": "Write the plan and rules of engagement for a security test (penetration test, red team, purple team, BAS rollout, control validation) covering objectives, scope and exclusions, authorization, test windows, deconfliction, stop conditions, data handling, communication and reporting. Use when commissioning or preparing a security test, reviewing a vendor's test proposal, or when a test needs written authorization before it starts.",
+          "verification": "documented",
+          "version": "2.2.0",
+          "path": "skills/security-testing/security-test-planning"
         }
       ]
     },
@@ -2309,7 +2415,7 @@
           "title": "Windows Event Log Analysis",
           "description": "Investigate Windows Security, System, PowerShell, Sysmon, RDP, Task Scheduler and Defender event logs \u2014 logons, process creation, service/task installs, account changes, log clearing \u2014 with Get-WinEvent, Hayabusa, Chainsaw or SIEM queries. Use when analysing EVTX files or Windows events in a SIEM during triage, hunting or forensics.",
           "verification": "documented",
-          "version": "2.0.0",
+          "version": "2.2.0",
           "path": "skills/windows-security/windows-event-log-analysis"
         },
         {

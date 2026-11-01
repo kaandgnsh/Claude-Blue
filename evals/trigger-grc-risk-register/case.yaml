@@ -1,0 +1,25 @@
+# Generated from evals/cases.json by `python3 tools/claude_blue.py catalog`; do not edit.
+schema_version: "1.0"
+name: trigger-grc-risk-register
+description: "Should load risk-register from the blue-team-grc plugin."
+tags: [grc, should-trigger]
+execution:
+  prompt: "Our auditors want a proper information security risk register. Help me set one up with likelihood, impact, owners and treatment decisions."
+  max_turns: 6
+  timeout_seconds: 300
+  allowed_tools: [Skill, Read, Glob, Grep]
+runs: 3
+graders:
+  - type: tool_used
+    name: fired-risk-register
+    tool: Skill
+    input_match: ":(risk-register)\\b"
+    min: 1
+  - type: regex
+    name: covers-key-steps
+    target: last_message
+    pattern: "(owner|treatment|likelihood)"
+    flags: "i"
+  - type: llm
+    name: actionable-defensive-answer
+    criteria: "The answer gives concrete steps specific to this request (checks, commands, queries, templates or decision criteria) rather than generic security advice."
