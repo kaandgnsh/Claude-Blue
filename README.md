@@ -10,6 +10,9 @@
   <img src="https://img.shields.io/badge/Claude%20Code-Plugin%20%2B%20Skills-D97757?style=for-the-badge" alt="Claude Code plugin and skills">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/License-MIT-315C45?style=for-the-badge" alt="MIT license">
+  <a href="https://hub.xerj.org/corpus/kaandgnsh--claude-blue">
+    <img src="https://img.shields.io/badge/Listed%20on-XERJ%20Corpus%20Hub-6E40C9?style=for-the-badge" alt="Listed on XERJ Corpus Hub">
+  </a>
   <a href="https://github.com/kaandgnsh/Claude-Blue/actions/workflows/quality.yml">
     <img src="https://github.com/kaandgnsh/Claude-Blue/actions/workflows/quality.yml/badge.svg?branch=main" alt="Quality">
   </a>
@@ -38,6 +41,8 @@
 - output templates you can paste into a case;
 - explicit safety boundaries;
 - links to related skills and official references.
+
+Claude-Blue is listed as a reference corpus on [XERJ Corpus Hub](https://hub.xerj.org/corpus/kaandgnsh--claude-blue), the AI-agent corpus catalog from [xerj-org/xerj](https://github.com/xerj-org/xerj) (⭐18k+).
 
 Skills are written in the [Agent Skills](https://agentskills.io/specification) format. Claude Code loads one automatically when your request matches its description, or you invoke it by name.
 
